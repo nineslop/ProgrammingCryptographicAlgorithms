@@ -27,3 +27,4 @@ var caesarEncryptedText = caesarCipher(preprocessedText, 3);
 console.log('Оригинальный текст:', originalText);
 console.log('Предварительно обработанный текст:', preprocessedText);
 console.log('Шифр Цезаря (с ключом 3):', caesarEncryptedText);
+У
