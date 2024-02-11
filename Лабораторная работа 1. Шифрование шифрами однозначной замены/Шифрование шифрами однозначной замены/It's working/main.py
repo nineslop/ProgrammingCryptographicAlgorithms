@@ -112,7 +112,7 @@ class CipherApp(QWidget):
         self.encrypt_button.clicked.connect(self.cipher_parser)
 
     def text_preparation(self, text):
-        bigTextFlag = False  # TODO: Добавить обработку флага
+        bigTextFlag = False  # TODO: 
         if bigTextFlag:
             return text.replace("ё", "е").replace(".", "тчк").replace(",", "зпт").replace("-", "тире").replace(" ", "прбл").replace(":", "двтч").replace(";", "тчсзп").replace("(", "отскб").replace(")", "зкскб").replace("?", "впрзн").replace("!", "восклзн").replace("\n", "првст").lower()
         else:
@@ -184,10 +184,10 @@ class CipherApp(QWidget):
             if vigener_keyletter:
                 if vigener_check_parameters(vigener_keyletter, alphabet):
                     if mode == "encrypt":
-                        # Измените эту строку
+                        # Надо изменить эту строку
                         cipher_text_input = vigener_encrypt(self.text_preparation(open_text_input), vigener_keyletter, alphabet)
                     elif mode == "decrypt":
-                        # И измените эту строку
+                        # И изменить эту строку
                         open_text_input = vigener_decrypt(cipher_text_input, vigener_keyletter, alphabet)
                 else:
                     if mode == "encrypt":
