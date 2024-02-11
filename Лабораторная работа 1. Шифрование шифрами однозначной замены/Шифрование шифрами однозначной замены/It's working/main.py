@@ -233,7 +233,6 @@ class CipherApp(QWidget):
                     cipher_text_input = "Введите ключевое слово для шифра Плейфера"
                 elif mode == "decrypt":
                     open_text_input = "Введите ключевое слово для шифра Плейфера"
-        # Добавьте обработку остальных шифров здесь
         else:
             pass
 
