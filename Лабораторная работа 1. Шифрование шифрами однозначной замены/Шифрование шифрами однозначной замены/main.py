@@ -17,7 +17,7 @@ class CipherApp(QMainWindow):
 
         cipher_label = QLabel('Выберите шифр:')
         self.cipher_combobox = QComboBox()
-        self.cipher_combobox.addItems(["Шифр Атбаш", "Шифр Цезаря", "Квадрат Полибия"])
+        self.cipher_combobox.addItems(["Шифр Атбаш", "Шифр Цезаря", "Квадрат Полибия", "Шифр Тритемия"])
 
         key_label = QLabel('Введите ключ (только для Шифра Цезаря):')
         self.key_entry = QLineEdit()
@@ -142,6 +142,35 @@ class CipherApp(QMainWindow):
                 result += char
 
         return result
+    
+    def tritemius_cipher(self, input_str):
+        alphabet = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"  # Алфавит
+        punctuations = {
+            ",": "ЗПТ",
+            ".": "ТЧК",
+            "-": "ТИРЕ",
+        }
+
+        result = ""
+        for char in input_str:
+            if char.isalpha():
+                is_upper = char.isupper()
+                char = char.upper()
+                m = alphabet.index(char) + 1  # Номер позиции буквы в алфавите (от 1 до N)
+                p = m - 1  # Позиция буквы в сообщении (от 0 до N-1)
+                k = 2 * p**2 + 5 * p + 3  # Шаг смещения
+                L = (m + k) % len(alphabet)  # Номер зашифрованной буквы в алфавите
+                if L == 0:
+                    L = len(alphabet)
+                new_char = alphabet[L - 1]  # Буква шифрограммы
+                if not is_upper:
+                    new_char = new_char.lower()
+                result += new_char
+            elif char in punctuations:
+                result += punctuations[char]
+            else:
+                result += char
+        return result
 
     def caesar_decipher(self, input_str, key):
         return self.caesar_cipher(input_str, -key)
@@ -175,6 +204,41 @@ class CipherApp(QMainWindow):
                 i += 1
 
         return decrypted_text
+    
+    def tritemius_decipher(self, input_str):
+        alphabet = "АБВГДЕЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ"  # Алфавит
+        punctuations = {
+            ",": "ЗПТ",
+            ".": "ТЧК",
+            "-": "ТИРЕ",
+        }
+
+        result = ""
+        for char in input_str:
+            if char.isalpha():
+                is_upper = char.isupper()
+                char = char.upper()
+                L = alphabet.index(char) + 1  # Номер зашифрованной буквы в алфавите
+                p = 0  # Предполагаем начальное значение для позиции в исходном сообщении
+                found = False
+                while not found:
+                    # Перебираем возможные значения позиции в исходном сообщении до тех пор, пока не найдем подходящее
+                    k = 2 * p**2 + 5 * p + 3  # Вычисляем шаг смещения для данной позиции
+                    m = (L - k) % len(alphabet)  # Номер исходной буквы в алфавите
+                    if alphabet[m - 1] == char:
+                        found = True
+                    else:
+                        p += 1
+                new_char = alphabet[m - 1]  # Исходная буква
+                if not is_upper:
+                    new_char = new_char.lower()
+                result += new_char
+            elif char in punctuations:
+                result += punctuations[char]
+            else:
+                result += char
+        return result
+
 
     def extended_cipher(self, input_str, action):
         result = ""
@@ -249,12 +313,18 @@ class CipherApp(QMainWindow):
         selected_cipher = self.cipher_combobox.currentText()
 
         if selected_cipher == "Шифр Цезаря":
-            key = int(self.key_entry.text())
+            key_str = self.key_entry.text()
+            if key_str.strip():
+                key = int(key_str)
+            else:
+                key = 0
             result = self.caesar_cipher(text_to_encrypt, key)
         elif selected_cipher == "Шифр Атбаш":
             result = self.atbash_cipher(text_to_encrypt)
         elif selected_cipher == "Квадрат Полибия":
             result = self.polybius_square_encrypt(text_to_encrypt)
+        elif selected_cipher == "Шифр Тритемия":
+            result = self.tritemius_cipher(text_to_encrypt)
         elif selected_cipher == "Расширенный":
             result = self.extended_cipher(text_to_encrypt)
         else:
@@ -273,6 +343,8 @@ class CipherApp(QMainWindow):
             result = self.atbash_decipher(text_to_decrypt)
         elif selected_cipher == "Квадрат Полибия":
             result = self.polybius_square_decrypt(text_to_decrypt)
+        elif selected_cipher == "Шифр Тритемия":
+            result = self.tritemius_decipher(text_to_decrypt)
         elif selected_cipher == "Расширенный":
             result = self.extended_cipher(text_to_decrypt)
         else:
