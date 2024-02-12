@@ -52,64 +52,84 @@ class CipherApp(QWidget):
         layout = QVBoxLayout()
 
         # Выбор шифра
-        self.cipher_label = QLabel('Выберите шифр:')
+        cipher_layout = QHBoxLayout()
+        cipher_label = QLabel('Выберите шифр:')
         self.cipher_combo = QComboBox()
         self.cipher_combo.addItems(available_ciphers)
+        cipher_layout.addWidget(cipher_label)
+        cipher_layout.addWidget(self.cipher_combo)
 
         # Ввод открытого текста
-        self.open_text_label = QLabel('Введите открытый текст:')
+        open_text_label = QLabel('Введите открытый текст:')
         self.open_text_edit = QTextEdit()
 
         # Ввод зашифрованного текста
-        self.cipher_text_label = QLabel('Введите зашифрованный текст:')
+        cipher_text_label = QLabel('Введите зашифрованный текст:')
         self.cipher_text_edit = QTextEdit()
 
         # Ввод сдвига для шифра Цезаря
-        self.cesar_shift_label = QLabel('Введите сдвиг для шифра Цезаря:')
         self.cesar_shift_edit = QLineEdit()
+        self.cesar_shift_edit.setPlaceholderText('Введите сдвиг для шифра Цезаря')
+        self.cesar_shift_edit.textChanged.connect(self.check_cesar_shift)
 
         # Ввод ключевого слова для шифра Белазо или Плейфера
-        self.keyword_label = QLabel('Введите ключевое слово для шифра Белазо или Плейфера:')
         self.keyword_edit = QLineEdit()
+        self.keyword_edit.setPlaceholderText('Введите ключевое слово для шифра Белазо или Плейфера')
 
         # Ввод ключевой буквы для шифра Виженера
-        self.vigener_key_label = QLabel('Введите ключевую букву для шифра Виженера:')
         self.vigener_key_edit = QLineEdit()
+        self.vigener_key_edit.setPlaceholderText('Введите ключевую букву для шифра Виженера')
+        self.vigener_key_edit.textChanged.connect(self.check_vigener_key)
 
         # Ввод ключевой матрицы для шифра Матричный
-        self.matrix_label = QLabel('Введите ключевую матрицу для шифра Матричный:')
         self.matrix_edit = QLineEdit()
+        self.matrix_edit.setPlaceholderText('Введите ключевую матрицу для шифра Матричный')
 
         # Режим работы шифра (шифрование или дешифрование)
-        self.mode_label = QLabel('Выберите режим:')
+        mode_layout = QHBoxLayout()
+        mode_label = QLabel('Выберите режим:')
         self.mode_combo = QComboBox()
         self.mode_combo.addItems(['Шифрование', 'Дешифрование'])
+        mode_layout.addWidget(mode_label)
+        mode_layout.addWidget(self.mode_combo)
 
         # Кнопка для запуска шифрования/дешифрования
         self.encrypt_button = QPushButton('Выполнить')
 
-        layout.addWidget(self.cipher_label)
-        layout.addWidget(self.cipher_combo)
-        layout.addWidget(self.open_text_label)
+        layout.addLayout(cipher_layout)
+        layout.addWidget(open_text_label)
         layout.addWidget(self.open_text_edit)
-        layout.addWidget(self.cipher_text_label)
+        layout.addWidget(cipher_text_label)
         layout.addWidget(self.cipher_text_edit)
-        layout.addWidget(self.cesar_shift_label)
         layout.addWidget(self.cesar_shift_edit)
-        layout.addWidget(self.keyword_label)
         layout.addWidget(self.keyword_edit)
-        layout.addWidget(self.vigener_key_label)
         layout.addWidget(self.vigener_key_edit)
-        layout.addWidget(self.matrix_label)
         layout.addWidget(self.matrix_edit)
-        layout.addWidget(self.mode_label)
-        layout.addWidget(self.mode_combo)
+        layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
         self.setLayout(layout)
 
         # Подключение слотов к сигналам
         self.encrypt_button.clicked.connect(self.cipher_parser)
+
+    def check_cesar_shift(self):
+        shift_text = self.cesar_shift_edit.text()
+        try:
+            shift = int(shift_text)
+            if shift < 0 or shift >= len(alphabet):
+                self.cesar_shift_edit.setStyleSheet("QLineEdit { color: red; }")
+            else:
+                self.cesar_shift_edit.setStyleSheet("")
+        except ValueError:
+            self.cesar_shift_edit.setStyleSheet("QLineEdit { color: red; }")
+
+    def check_vigener_key(self):
+        key_text = self.vigener_key_edit.text()
+        if len(key_text) != 1 or key_text.lower() not in alphabet:
+            self.vigener_key_edit.setStyleSheet("QLineEdit { color: red; }")
+        else:
+            self.vigener_key_edit.setStyleSheet("")
 
     def text_preparation(self, text):
         bigTextFlag = False  # TODO: 
@@ -127,8 +147,11 @@ class CipherApp(QWidget):
         vigener_keyletter = self.vigener_key_edit.text()
         matrix_input = self.matrix_edit.text()
 
-        # Определение режима работы (шифрование или дешифрование)
+         # Определение режима работы (шифрование или дешифрование)
         mode = 'encrypt' if self.mode_combo.currentText() == 'Шифрование' else 'decrypt'
+
+        # Определение флага для обработки больших текстов
+        bigTextFlag = len(open_text_input) > 1000  #ваш порог длины текста
 
         if cipher_choose_input == "Шифр АТБАШ":
             if mode == "encrypt":
@@ -185,10 +208,10 @@ class CipherApp(QWidget):
                 if vigener_check_parameters(vigener_keyletter, alphabet):
                     if mode == "encrypt":
                         # Надо изменить эту строку
-                        cipher_text_input = vigener_encrypt(self.text_preparation(open_text_input), vigener_keyletter, alphabet)
+                        cipher_text_input = vigener_encrypt(self.text_preparation(open_text_input), vigener_keyletter, mode, alphabet)
                     elif mode == "decrypt":
                         # И изменить эту строку
-                        open_text_input = vigener_decrypt(cipher_text_input, vigener_keyletter, alphabet)
+                        open_text_input = vigener_decrypt(cipher_text_input, vigener_keyletter, mode, alphabet)
                 else:
                     if mode == "encrypt":
                         cipher_text_input = "Проверьте правильность ввода ключевой буквы"
