@@ -72,9 +72,16 @@ def inverse_matrix(A):
     return B
 
 def matrix_check_parameters(matrix):
+    print(matrix)
+    if determinant(matrix) == 0:
+        return False
+    for row in matrix:
+        for num in row:
+            if not isinstance(num, (int, float)):
+                return False
     if len(matrix) == 3 and len(matrix[2]) == 3:
-        return True
-    return False
+        return True  # True, если матрица 3х3
+    return False  # False, если матрица не соответствует требованиям
 
 def matrix_encrypt(open_text, key_matrix, alphabet):
     encrypted_text = ""
@@ -111,14 +118,5 @@ def matrix_decrypt(encrypted_text, key_matrix, alphabet):
         if not result_matrix:
             break
         for el in result_matrix:
-            decrypted_text += alphabet[abs(round(el[0][0]))]
+            decrypted_text += alphabet[int(round(el[0][0]))]  # Convert to integer before accessing index
     return decrypted_text
-
-# Пример использования функций:
-# open_text = "Заяц в кустах - это ещё не готовое мясо.".replace("ё", "е").replace(".", "тчк").replace(",", "зпт").replace("-", "тире").replace(" ", "").replace(":", "").replace(";", "").replace("(", "").replace(")", "").lower()
-# alphabet = ["а", "б", "в", "г", "д", "е", "ж", "з", "и", "й", "к", "л", "м", "н", "о", "п", "р", "с", "т", "у", "ф", "х", "ц", "ч", "ш", "щ", "ъ", "ы", "ь", "э", "ю", "я"]
-# key_matrix = [[2, 1, 2], [4, 0, 3], [4, 2, 1]]
-# encrypted_text = matrix_encrypt(open_text, key_matrix, alphabet)
-# decrypted_text = matrix_decrypt(encrypted_text, key_matrix, alphabet)
-# print(encrypted_text)
-# print(decrypted_text)

@@ -18,7 +18,7 @@ def playfair_encrypt(open_text, keyword, alphabet):
     unprepared_alphabet = list(set(keyword) | set(alphabet))
     new_alphabet = [unprepared_alphabet[i:i+6] for i in range(0, len(unprepared_alphabet), 6)]
     
-    for i in range(0, len(open_text), 2):  # Избавление от биграм из одинаковых букв
+    for i in range(0, len(open_text) - 1, 2):  # Избавление от биграм из одинаковых букв
         if open_text[i] == open_text[i + 1] and not (open_text[i] == 'ф' and open_text[i + 1] == 'ф'):  # Если биграма не "фф"
             open_text = open_text[:i + 1] + "ф" + open_text[i + 1:]
         elif open_text[i] == open_text[i + 1] and open_text[i] == 'ф' and open_text[i + 1] == 'ф':  # Если биграма "фф"
