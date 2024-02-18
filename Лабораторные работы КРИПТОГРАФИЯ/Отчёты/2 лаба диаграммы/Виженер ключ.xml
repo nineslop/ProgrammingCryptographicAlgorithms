@@ -1,0 +1,79 @@
+<mxfile host="app.diagrams.net" modified="2024-02-18T12:06:15.399Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:122.0) Gecko/20100101 Firefox/122.0" etag="1B79ZE99RIguammKG2B8" version="23.1.2" type="device">
+  <diagram name="Страница — 1" id="CNwCdMVr3g9Fr93ZRRnN">
+    <mxGraphModel dx="682" dy="804" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-109" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="42ux4LgK9Obpiu_vtNBR-110" target="42ux4LgK9Obpiu_vtNBR-112">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1144.75" y="130" as="targetPoint" />
+            <Array as="points" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-110" value="&lt;font style=&quot;font-size: 12px;&quot;&gt;Начало&lt;/font&gt;" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="1105.75" y="80" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-111" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="42ux4LgK9Obpiu_vtNBR-112" target="42ux4LgK9Obpiu_vtNBR-117">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-112" value="Получение подготовленного ключевого слова и алфавита" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;strokeWidth=1;" vertex="1" parent="1">
+          <mxGeometry x="1060.75" y="140" width="150" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-113" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="42ux4LgK9Obpiu_vtNBR-117" target="42ux4LgK9Obpiu_vtNBR-120">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1022.25" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-114" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="42ux4LgK9Obpiu_vtNBR-113">
+          <mxGeometry x="-0.6439" relative="1" as="geometry">
+            <mxPoint x="5" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-115" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="42ux4LgK9Obpiu_vtNBR-117" target="42ux4LgK9Obpiu_vtNBR-118">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1134.75" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-116" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="42ux4LgK9Obpiu_vtNBR-115">
+          <mxGeometry x="-0.1448" relative="1" as="geometry">
+            <mxPoint y="-59" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-117" value="Ключевая буква&lt;br&gt;введена" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="1060.75" y="240" width="149.25" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-118" value="Вернуть отрицательный результат" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;perimeterSpacing=0;" vertex="1" parent="1">
+          <mxGeometry x="1087" y="476" width="97.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-119" value="Вернуть положительный&lt;br&gt;результат" style="strokeWidth=1;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;perimeterSpacing=0;" vertex="1" parent="1">
+          <mxGeometry x="1025.25" y="380" width="97.5" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-120" value="Введена одна &lt;br&gt;буква и она есть в алфавите" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="897" y="300" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-121" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="42ux4LgK9Obpiu_vtNBR-120">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1136" y="460.07142857142867" as="targetPoint" />
+            <mxPoint x="1047" y="460" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="972" y="460" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-122" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="42ux4LgK9Obpiu_vtNBR-121">
+          <mxGeometry x="0.4325" relative="1" as="geometry">
+            <mxPoint x="-45" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-123" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="42ux4LgK9Obpiu_vtNBR-120" target="42ux4LgK9Obpiu_vtNBR-119">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="42ux4LgK9Obpiu_vtNBR-124" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="42ux4LgK9Obpiu_vtNBR-123">
+          <mxGeometry x="0.4943" y="1" relative="1" as="geometry">
+            <mxPoint x="-15" y="-23" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

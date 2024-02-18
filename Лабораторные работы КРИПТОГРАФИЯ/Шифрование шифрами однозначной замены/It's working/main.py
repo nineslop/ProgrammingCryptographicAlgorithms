@@ -10,7 +10,7 @@ from belazo import belazo_encrypt, belazo_decrypt, belazo_check_parameters
 from vigener import vigener_encrypt, vigener_decrypt, vigener_check_parameters
 from S_block import s_block_encrypt, s_block_decrypt
 from matrix import matrix_encrypt, matrix_decrypt, matrix_check_parameters, multiply_matrix, determinant, adjugate_matrix, inverse_matrix
-from playfair import playfair_encrypt, playfair_decrypt, playfair_check_parameters, get_alphabet_index
+from playfair import playfair_encrypt, playfair_decrypt, playfair_check_parameters
 # from veritcalTransposition import vertical_transposition_encrypt, vertical_transposition_decrypt, vertical_transposition_check_parameters
 
 available_ciphers = [
