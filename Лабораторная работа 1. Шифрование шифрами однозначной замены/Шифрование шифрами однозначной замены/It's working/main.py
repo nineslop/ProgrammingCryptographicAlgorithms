@@ -1,4 +1,5 @@
 import sys
+import random
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QComboBox, QTextEdit, QCheckBox
 from PyQt5.QtCore import Qt
 from atbash import atbash_encrypt, atbash_decrypt
@@ -7,14 +8,15 @@ from polibia import polibia_encrypt, polibia_decrypt
 from tritemiy import tritemiy_encrypt, tritemiy_decrypt
 from belazo import belazo_encrypt, belazo_decrypt, belazo_check_parameters
 from vigener import vigener_encrypt, vigener_decrypt, vigener_check_parameters
-# from S_block import s_block, combine_s_blocks, circular_shift_left
+from S_block import s_block_encrypt, s_block_decrypt
 from matrix import matrix_encrypt, matrix_decrypt, matrix_check_parameters, multiply_matrix, determinant, adjugate_matrix, inverse_matrix
 from playfair import playfair_encrypt, playfair_decrypt, playfair_check_parameters, get_alphabet_index
+# from veritcalTransposition import vertical_transposition_encrypt, vertical_transposition_decrypt, vertical_transposition_check_parameters
 
 available_ciphers = [
     "Шифр АТБАШ", "Шифр Цезаря", "Шифр Полибия",
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
-    "Шифр Матричный", "Шифр Плейфера",
+    "Шифр Матричный", "Шифр Плейфера", # "Вертикальная Транспозиция",
 ]
 
 alphabet = [
@@ -38,27 +40,7 @@ alphabet_playfair = [
     "ы", "э", "ю", "я"
 ]
 
-sBlocks = {
-    7: {'0': 'c', '1': '4', '2': '6', '3': '2', '4': 'a', '5': '5', '6': 'b', '7': '9', '8': 'e', '9': '8', 'a': 'd', 'b': '7', 'c': '0', 'd': '3', 'e': 'f', 'f': '1'},
-    6: {'0': '6', '1': '8', '2': '2', '3': '3', '4': '9', '5': 'a', '6': '5', '7': 'c', '8': '1', '9': 'e', 'a': '4', 'b': '7', 'c': 'b', 'd': 'd', 'e': '0', 'f': 'f'},
-    5: {'0': 'b', '1': '3', '2': '5', '3': '8', '4': '2', '5': 'f', '6': 'a', '7': 'd', '8': 'e', '9': '1', 'a': '7', 'b': '4', 'c': 'c', 'd': '9', 'e': '6', 'f': '0'},
-    4: {'0': 'c', '1': '8', '2': '2', '3': '1', '4': 'd', '5': '4', '6': 'f', '7': '6', '8': '7', '9': '0', 'a': 'a', 'b': '5', 'c': '3', 'd': 'e', 'e': '9', 'f': 'b'},
-    3: {'0': '7', '1': 'f', '2': '5', '3': 'a', '4': '8', '5': '1', '6': '6', '7': 'd', '8': '0', '9': '9', 'a': '3', 'b': 'e', 'c': 'b', 'd': '4', 'e': '2', 'f': 'c'},
-    2: {'0': '5', '1': 'd', '2': 'f', '3': '6', '4': '9', '5': '2', '6': 'c', '7': 'a', '8': 'b', '9': '7', 'a': '8', 'b': '1', 'c': '4', 'd': '3', 'e': 'e', 'f': '0'},
-    1: {'0': '8', '1': 'e', '2': '2', '3': '5', '4': '6', '5': '9', '6': '1', '7': 'c', '8': 'f', '9': '4', 'a': 'b', 'b': '0', 'c': 'd', 'd': 'a', 'e': '3', 'f': '7'},
-    0: {'0': '1', '1': '7', '2': 'e', '3': 'd', '4': '0', '5': '5', '6': '8', '7': '3', '8': '4', '9': 'f', 'a': 'a', 'b': '6', 'c': '9', 'd': 'c', 'e': 'b', 'f': '2'}
-}
-
-reversedSBlocks = {
-    7: {'c': '0', '4': '1', '6': '2', '2': '3', 'a': '4', '5': '5', 'b': '6', '9': '7', 'e': '8', '8': '9', 'd': 'a', '7': 'b', '0': 'c', '3': 'd', 'f': 'e', '1': 'f'},
-    6: {'6': '0', '8': '1', '2': '2', '3': '3', '9': '4', 'a': '5', '5': '6', 'c': '7', '1': '8', 'e': '9', '4': 'a', '7': 'b', 'b': 'c', 'd': 'd', '0': 'e', 'f': 'f'},
-    5: {'b': '0', '3': '1', '5': '2', '8': '3', '2': '4', 'f': '5', 'a': '6', 'd': '7', 'e': '8', '1': '9', '7': 'a', '4': 'b', 'c': 'c', '9': 'd', '6': 'e', '0': 'f'},
-    4: {'c': '0', '8': '1', '2': '2', '1': '3', 'd': '4', '4': '5', 'f': '6', '6': '7', '7': '8', '0': '9', 'a': 'a', '5': 'b', '3': 'c', 'e': 'd', '9': 'e', 'b': 'f'},
-    3: {'7': '0', 'f': '1', '5': '2', 'a': '3', '8': '4', '1': '5', '6': '6', 'd': '7', '0': '8', '9': '9', '3': 'a', 'e': 'b', 'b': 'c', '4': 'd', '2': 'e', 'c': 'f'},
-    2: {'5': '0', 'd': '1', 'f': '2', '6': '3', '9': '4', '2': '5', 'c': '6', 'a': '7', 'b': '8', '7': '9', '8': 'a', '1': 'b', '4': 'c', '3': 'd', 'e': 'e', '0': 'f'},
-    1: {'8': '0', 'e': '1', '2': '2', '5': '3', '6': '4', '9': '5', '1': '6', 'c': '7', 'f': '8', '4': '9', 'b': 'a', '0': 'b', 'd': 'c', 'a': 'd', '3': 'e', '7': 'f'},
-    0: {'1': '0', '7': '1', 'e': '2', 'd': '3', '0': '4', '5': '5', '8': '6', '3': '7', '4': '8', 'f': '9', 'a': 'a', '6': 'b', '9': 'c', 'c': 'd', 'b': 'e', '2': 'f'}
-}
+alphabet_sblock = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
 
 mem = {
     "bigTextFlag": False,
@@ -109,6 +91,10 @@ class CipherApp(QWidget):
         # Ввод ключевой матрицы для шифра Матричный
         self.matrix_edit = QLineEdit()
         self.matrix_edit.setPlaceholderText('Введите ключевую матрицу для шифра Матричный')
+
+        # Ввод ключа для шифра вертикальной транспозиции
+        # self.vertical_transposition_keyword_edit = QLineEdit()
+        # self.vertical_transposition_keyword_edit.setPlaceholderText('Введите ключ для шифра вертикальной транспозиции')
 
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
@@ -246,6 +232,7 @@ class CipherApp(QWidget):
         elif cipher_choose_input == "Шифр Виженера":
             if vigener_keyletter:
                 if vigener_check_parameters(vigener_keyletter, alphabet):
+                    mode = "encrypt" if self.mode_combo.currentText() == 'Шифрование' else 'decrypt'
                     if mode == "encrypt":
                         cipher_text_input = vigener_encrypt(self.text_preparation(open_text_input), vigener_keyletter, "selfkey", alphabet)
                     elif mode == "decrypt":
@@ -260,11 +247,11 @@ class CipherApp(QWidget):
                     cipher_text_input = "Введите ключевую букву для шифра Виженера"
                 elif mode == "decrypt":
                     open_text_input = "Введите ключевую букву для шифра Виженера"
-        # elif cipher_choose_input == "МАГМА(s_block)":
-        #     if mode == "encrypt":
-        #         cipher_text_input = s_block(cipher_text_input)
-        #     elif mode == "decrypt":
-        #         open_text_input = s_block(open_text_input, reversedSBlocks)
+        elif cipher_choose_input == "МАГМА(s_block)":
+            if mode == "encrypt":
+                cipher_text_input = s_block_encrypt(self.text_preparation(open_text_input), alphabet_sblock)
+            elif mode == "decrypt":
+                open_text_input = s_block_decrypt(cipher_text_input, alphabet_sblock)
         elif cipher_choose_input == "Шифр Матричный":
             input_matrix = list(map(int, matrix_input.split()))
             matrix_input = [input_matrix[:3], input_matrix[3:6], input_matrix[6:]]
