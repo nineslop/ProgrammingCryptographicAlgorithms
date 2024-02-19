@@ -118,7 +118,7 @@ def matrix_decrypt(encrypted_text, key_matrix, alphabet):
         if not result_matrix:
             break
         for el in result_matrix:
-            index = int(round(el[0][0].real)) if isinstance(el[0][0], complex) else int(round(el[0][0]))
+            index = int(round(el[0].real)) if isinstance(el[0], complex) else int(round(el[0]))
             if index >= 0:
                 decrypted_text += alphabet[index % len(alphabet)]
             else:
