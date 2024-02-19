@@ -116,6 +116,7 @@ class CipherApp(QWidget):
         layout.addWidget(self.keyword_edit)
         layout.addWidget(self.vigener_key_edit)
         layout.addWidget(self.matrix_edit)
+        # layout.addWidget(self.vertical_transposition_keyword_edit)
         layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
@@ -272,6 +273,7 @@ class CipherApp(QWidget):
                 elif mode == "decrypt":
                     open_text_input = "Введите ключевую матрицу для шифра Матричный"
         elif cipher_choose_input == "Шифр Плейфера":
+            keyword = self.keyword_edit.text()
             if keyword:
                 if playfair_check_parameters(keyword, alphabet_playfair):
                     if mode == "encrypt":
@@ -280,14 +282,33 @@ class CipherApp(QWidget):
                         open_text_input = playfair_decrypt(cipher_text_input, keyword, alphabet_playfair)
                 else:
                     if mode == "encrypt":
-                        cipher_text_input = "Проверьте правильность ввода ключевого слова"
+                        cipher_text_input = "Проверьте правильность ключевого слова"
                     elif mode == "decrypt":
-                        open_text_input = "Проверьте правильность ввода ключевого слова"
+                        open_text_input = "Проверьте правильность ключевого слова"
             else:
                 if mode == "encrypt":
-                    cipher_text_input = "Введите ключевое слово для шифра Плейфера"
+                    cipher_text_input = "Введите ключевое слово для шифра Плейфэра"
                 elif mode == "decrypt":
-                    open_text_input = "Введите ключевое слово для шифра Плейфера"
+                    open_text_input = "Введите ключевое слово для шифра Плейфэра"
+        # elif cipher_choose_input == "Вертикальная Транспозиция":
+        #     keyword = self.vertical_transposition_keyword_edit.text()
+        #     if keyword:
+        #         matrix_input = [int(num) for num in keyword.split() if num.isdigit()]
+        #         if vertical_transposition_check_parameters(matrix_input, cipher_text_input):
+        #             if mode == "encrypt":
+        #                 cipher_text_input = vertical_transposition_encrypt(cipher_text_input, matrix_input)
+        #             elif mode == "decrypt":
+        #                 open_text_input = vertical_transposition_decrypt(cipher_text_input, matrix_input)
+        #         else:
+        #             if mode == "encrypt":
+        #                 cipher_text_input = "Проверьте правильность ввода ключа"
+        #             elif mode == "decrypt":
+        #                 open_text_input = "Проверьте правильность ввода ключа"
+        #     else:
+        #         if mode == "encrypt":
+        #             cipher_text_input = "Введите ключ и текст для шифра вертикальной транспозиции"
+        #         elif mode == "decrypt":
+        #             open_text_input = "Введите ключ и текст для шифра вертикальной транспозиции"
         else:
             pass
 
