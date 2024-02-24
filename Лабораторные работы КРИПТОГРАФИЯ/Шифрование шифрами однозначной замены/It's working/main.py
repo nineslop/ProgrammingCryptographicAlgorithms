@@ -1,5 +1,4 @@
 import sys
-import random
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QLineEdit, QPushButton, QComboBox, QTextEdit, QCheckBox
 from PyQt5.QtCore import Qt
 from atbash import atbash_encrypt, atbash_decrypt
@@ -11,12 +10,13 @@ from vigener import vigener_encrypt, vigener_decrypt, vigener_check_parameters
 from S_block import s_block_encrypt, s_block_decrypt
 from matrix import matrix_encrypt, matrix_decrypt, matrix_check_parameters, multiply_matrix, determinant, adjugate_matrix, inverse_matrix
 from playfair import playfair_encrypt, playfair_decrypt, playfair_check_parameters
-# from veritcalTransposition import vertical_transposition_encrypt, vertical_transposition_decrypt, vertical_transposition_check_parameters
+from veritcalTransposition import vertical_transposition_check_parameters, vertical_transposition_encrypt, vertical_transposition_decrypt
+
 
 available_ciphers = [
     "Шифр АТБАШ", "Шифр Цезаря", "Шифр Полибия",
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
-    "Шифр Матричный", "Шифр Плейфера", # "Вертикальная Транспозиция",
+    "Шифр Матричный", "Шифр Плейфера", "Шифр вертикальной перестановки",
 ]
 
 alphabet = [
@@ -81,7 +81,7 @@ class CipherApp(QWidget):
 
         # Ввод ключевого слова для шифра Белазо или Плейфера
         self.keyword_edit = QLineEdit()
-        self.keyword_edit.setPlaceholderText('Введите ключевое слово для шифра Белазо или Плейфера')
+        self.keyword_edit.setPlaceholderText('Введите ключевое слово для шифра Белазо, Плейфера, Вертикальной перестановки')
 
         # Ввод ключевой буквы для шифра Виженера
         self.vigener_key_edit = QLineEdit()
@@ -91,10 +91,6 @@ class CipherApp(QWidget):
         # Ввод ключевой матрицы для шифра Матричный
         self.matrix_edit = QLineEdit()
         self.matrix_edit.setPlaceholderText('Введите ключевую матрицу для шифра Матричный')
-
-        # Ввод ключа для шифра вертикальной транспозиции
-        # self.vertical_transposition_keyword_edit = QLineEdit()
-        # self.vertical_transposition_keyword_edit.setPlaceholderText('Введите ключ для шифра вертикальной транспозиции')
 
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
@@ -116,7 +112,6 @@ class CipherApp(QWidget):
         layout.addWidget(self.keyword_edit)
         layout.addWidget(self.vigener_key_edit)
         layout.addWidget(self.matrix_edit)
-        # layout.addWidget(self.vertical_transposition_keyword_edit)
         layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
@@ -290,25 +285,24 @@ class CipherApp(QWidget):
                     cipher_text_input = "Введите ключевое слово для шифра Плейфэра"
                 elif mode == "decrypt":
                     open_text_input = "Введите ключевое слово для шифра Плейфэра"
-        # elif cipher_choose_input == "Вертикальная Транспозиция":
-        #     keyword = self.vertical_transposition_keyword_edit.text()
-        #     if keyword:
-        #         matrix_input = [int(num) for num in keyword.split() if num.isdigit()]
-        #         if vertical_transposition_check_parameters(matrix_input, cipher_text_input):
-        #             if mode == "encrypt":
-        #                 cipher_text_input = vertical_transposition_encrypt(cipher_text_input, matrix_input)
-        #             elif mode == "decrypt":
-        #                 open_text_input = vertical_transposition_decrypt(cipher_text_input, matrix_input)
-        #         else:
-        #             if mode == "encrypt":
-        #                 cipher_text_input = "Проверьте правильность ввода ключа"
-        #             elif mode == "decrypt":
-        #                 open_text_input = "Проверьте правильность ввода ключа"
-        #     else:
-        #         if mode == "encrypt":
-        #             cipher_text_input = "Введите ключ и текст для шифра вертикальной транспозиции"
-        #         elif mode == "decrypt":
-        #             open_text_input = "Введите ключ и текст для шифра вертикальной транспозиции"
+        elif cipher_choose_input == "Шифр вертикальной перестановки":
+            keyword = self.keyword_edit.text()
+            if keyword:
+                if vertical_transposition_check_parameters(keyword, alphabet):
+                    if mode == "encrypt":
+                        cipher_text_input = vertical_transposition_encrypt(self.text_preparation(open_text_input), keyword, alphabet)
+                    elif mode == "decrypt":
+                         open_text_input = vertical_transposition_decrypt(cipher_text_input, keyword, alphabet)
+                else:
+                    if mode == "encrypt":
+                        cipher_text_input = "Проверьте правильность ключевого слова"
+                    elif mode == "decrypt":
+                        open_text_input = "Проверьте правильность ключевого слова"
+            else:
+                if mode == "encrypt":
+                    cipher_text_input = "Введите ключевое слово для шифра вертикальной перестановки"
+                elif mode == "decrypt":
+                    open_text_input = "Введите ключевое слово для шифра вертикальной перестановки"
         else:
             pass
 
