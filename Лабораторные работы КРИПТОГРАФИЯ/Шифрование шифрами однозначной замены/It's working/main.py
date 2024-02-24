@@ -7,16 +7,17 @@ from polibia import polibia_encrypt, polibia_decrypt
 from tritemiy import tritemiy_encrypt, tritemiy_decrypt
 from belazo import belazo_encrypt, belazo_decrypt, belazo_check_parameters
 from vigener import vigener_encrypt, vigener_decrypt, vigener_check_parameters
-from S_block import s_block_encrypt, s_block_decrypt
+from S_block import s_block_check_parameters,s_block_encrypt, s_block_decrypt
 from matrix import matrix_encrypt, matrix_decrypt, matrix_check_parameters, multiply_matrix, determinant, adjugate_matrix, inverse_matrix
 from playfair import playfair_encrypt, playfair_decrypt, playfair_check_parameters
 from veritcalTransposition import vertical_transposition_check_parameters, vertical_transposition_encrypt, vertical_transposition_decrypt
-
+from cardanosGrid import cardanosGridCheckParameters, cardanosGridEncrypt, cardanosGridDecrypt
 
 available_ciphers = [
     "Шифр АТБАШ", "Шифр Цезаря", "Шифр Полибия",
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
     "Шифр Матричный", "Шифр Плейфера", "Шифр вертикальной перестановки",
+    "Шифр решетка Кардано",
 ]
 
 alphabet = [
@@ -92,6 +93,14 @@ class CipherApp(QWidget):
         self.matrix_edit = QLineEdit()
         self.matrix_edit.setPlaceholderText('Введите ключевую матрицу для шифра Матричный')
 
+        # Ввод размерности решётки для шифра Кардано
+        self.cardanosGrid_edit = QLineEdit()
+        self.cardanosGrid_edit.setPlaceholderText('Введите размерность решётки для шифра Кардано (8 8)')
+
+        # Ввод решётки для шифра Кардано
+        self.cardanosGridGRIDGRID_edit = QLineEdit()
+        self.cardanosGridGRIDGRID_edit.setPlaceholderText('Решётка (0 1, 1 6, 2 1, 2 2, 2 4, 3 6, 3 7, 4 3, 4 5, 5 0, 6 3, 6 5, 6 7, 7 2, 7 4, 7 7)')
+
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
         mode_label = QLabel('Выберите режим:')
@@ -112,6 +121,8 @@ class CipherApp(QWidget):
         layout.addWidget(self.keyword_edit)
         layout.addWidget(self.vigener_key_edit)
         layout.addWidget(self.matrix_edit)
+        layout.addWidget(self.cardanosGrid_edit)
+        layout.addWidget(self.cardanosGridGRIDGRID_edit)
         layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
@@ -168,6 +179,8 @@ class CipherApp(QWidget):
         keyword = self.keyword_edit.text()
         vigener_keyletter = self.vigener_key_edit.text()
         matrix_input = self.matrix_edit.text()
+        cardanosGridSizeInput = self.cardanosGrid_edit.text()
+        cardanosGridGRIDInput = self.cardanosGridGRIDGRID_edit.text()
 
          # Определение режима работы (шифрование или дешифрование)
         mode = 'encrypt' if self.mode_combo.currentText() == 'Шифрование' else 'decrypt'
@@ -243,11 +256,8 @@ class CipherApp(QWidget):
                     cipher_text_input = "Введите ключевую букву для шифра Виженера"
                 elif mode == "decrypt":
                     open_text_input = "Введите ключевую букву для шифра Виженера"
-        elif cipher_choose_input == "МАГМА(s_block)":
-            if mode == "encrypt":
-                cipher_text_input = s_block_encrypt(self.text_preparation(open_text_input), alphabet_sblock)
-            elif mode == "decrypt":
-                open_text_input = s_block_decrypt(cipher_text_input, alphabet_sblock)
+        # elif cipher_choose_input == "МАГМА(s_block)":
+            
         elif cipher_choose_input == "Шифр Матричный":
             input_matrix = list(map(int, matrix_input.split()))
             matrix_input = [input_matrix[:3], input_matrix[3:6], input_matrix[6:]]
@@ -303,6 +313,19 @@ class CipherApp(QWidget):
                     cipher_text_input = "Введите ключевое слово для шифра вертикальной перестановки"
                 elif mode == "decrypt":
                     open_text_input = "Введите ключевое слово для шифра вертикальной перестановки"
+        elif cipher_choose_input == "Шифр решетка Кардано":
+            GridSizeInput = list(map(int, cardanosGridSizeInput.split(" ")))
+            GridCardano = [list(map(int, x.split(" "))) for x in cardanosGridGRIDInput.split(", ")]
+            if cardanosGridCheckParameters(GridSizeInput, GridCardano):
+                if mode == "encrypt":
+                    cipher_text_input = cardanosGridEncrypt(self.text_preparation(open_text_input), GridSizeInput, GridCardano, alphabet)
+                elif mode == "decrypt":
+                    open_text_input = cardanosGridDecrypt(cipher_text_input, GridSizeInput, GridCardano, alphabet)
+            else:
+                if mode == "encrypt":
+                    cipher_text_input = "Проверьте правильность ввода решетки"
+                elif mode == "decrypt":
+                    open_text_input = "Проверьте правильность ввода решетки"
         else:
             pass
 

@@ -1,35 +1,35 @@
 import random
 
-def verticalize(mk, grid):
+def verticalize(GridSizeInput, GridCardano):
     newGrid = []
-    for elem in grid:
-        newGrid.append([mk[0] - elem[0] - 1, elem[1]])
+    for elem in GridCardano:
+        newGrid.append([GridSizeInput[0] - elem[0] - 1, elem[1]])
     newGrid.sort()
     return newGrid
 
-def horizontalize(mk, grid):
+def horizontalize(GridSizeInput, GridCardano):
     newGrid = []
-    for elem in grid:
-        newGrid.append([elem[0], mk[1] - elem[1] - 1])
+    for elem in GridCardano:
+        newGrid.append([elem[0], GridSizeInput[1] - elem[1] - 1])
     newGrid.sort()
     return newGrid
 
-def cardanosGridGeneration(mk, textLength):
-    if mk[0] == -1 and mk[1] == -1:
+def cardanosGridGeneration(GridSizeInput, textLength):
+    if GridSizeInput[0] == -1 and GridSizeInput[1] == -1:
         len_ = max(int(textLength ** 0.5), 2)
-        mk = [len_, len_]
-    elif mk[0] * mk[1] < textLength:
+        GridSizeInput = [len_, len_]
+    elif GridSizeInput[0] * GridSizeInput[1] < textLength:
         return [], []
     
-    fullGrid = [[i, j] for i in range(mk[0]) for j in range(mk[1])]
+    fullGrid = [[i, j] for i in range(GridSizeInput[0]) for j in range(GridSizeInput[1])]
     cardanosGrid = []
     fglen = len(fullGrid) // 4
     
     for _ in range(fglen):
         el1 = random.choice(fullGrid)
-        el2 = [el1[0], mk[1] - el1[1] - 1]
-        el3 = [mk[0] - el1[0] - 1, el1[1]]
-        el4 = [mk[0] - el1[0] - 1, mk[1] - el1[1] - 1]
+        el2 = [el1[0], GridSizeInput[1] - el1[1] - 1]
+        el3 = [GridSizeInput[0] - el1[0] - 1, el1[1]]
+        el4 = [GridSizeInput[0] - el1[0] - 1, GridSizeInput[1] - el1[1] - 1]
         cardanosGrid.append(el1)
         
         for el in fullGrid[:]:
@@ -37,22 +37,22 @@ def cardanosGridGeneration(mk, textLength):
                 fullGrid.remove(el)
     
     cardanosGrid.sort(key=lambda x: (x[0], x[1]))
-    return [mk, cardanosGrid]
+    return [GridSizeInput, cardanosGrid]
 
-def cardanosGridCheckParameters(mk, grid):
+def cardanosGridCheckParameters(GridSizeInput, GridCardano):
     def isArrayInArray(arr, item):
         return item in arr
     
-    if len(mk) != 2 or not all(mk):
+    if len(GridSizeInput) != 2 or not all(GridSizeInput):
         return False
     
-    if mk[0] % 2 != 0 or mk[1] % 2 != 0:
+    if GridSizeInput[0] % 2 != 0 or GridSizeInput[1] % 2 != 0:
         return False
     
-    fst = grid
-    snd = horizontalize(mk, fst)
-    trd = verticalize(mk, snd)
-    fth = horizontalize(mk, trd)
+    fst = GridCardano
+    snd = horizontalize(GridSizeInput, fst)
+    trd = verticalize(GridSizeInput, snd)
+    fth = horizontalize(GridSizeInput, trd)
     
     for elem in fst:
         if isArrayInArray(snd, elem) or isArrayInArray(trd, elem) or isArrayInArray(fth, elem):
@@ -72,57 +72,57 @@ def cardanosGridCheckParameters(mk, grid):
     
     return True
 
-def cardanosGridEncrypt(openText, mk, grid, alphabet):
+def cardanosGridEncrypt(openText, GridSizeInput, GridCardano, alphabet):
     for letter in openText:
         if letter not in alphabet:
             return "Введёный текст содержит запрещённые символы"
     
     encryptedText = ""
     
-    if len(openText) < mk[0] * mk[1]:
-        openText = (openText + "заглушка" * ((mk[0] * mk[1] - len(openText)) // 8 + 1))[:mk[0] * mk[1]]
+    if len(openText) < GridSizeInput[0] * GridSizeInput[1]:
+        openText = (openText + "заглушка" * ((GridSizeInput[0] * GridSizeInput[1] - len(openText)) // 8 + 1))[:GridSizeInput[0] * GridSizeInput[1]]
     else:
-        openText = openText[:mk[0] * mk[1]]
+        openText = openText[:GridSizeInput[0] * GridSizeInput[1]]
     
-    encryptedTextGrid = [["" for _ in range(mk[1])] for _ in range(mk[0])]
+    encryptedTextGrid = [["" for _ in range(GridSizeInput[1])] for _ in range(GridSizeInput[0])]
     
     def fillTextGrid():
         nonlocal cuttedText
-        for coord in grid:
+        for coord in GridCardano:
             encryptedTextGrid[coord[0]][coord[1]] = cuttedText[0]
             cuttedText = cuttedText[1:]
     
     cuttedText = openText
     fillTextGrid()
-    grid = horizontalize(mk, grid)
+    GridCardano = horizontalize(GridSizeInput, GridCardano)
     fillTextGrid()
-    grid = verticalize(mk, grid)
+    GridCardano = verticalize(GridSizeInput, GridCardano)
     fillTextGrid()
-    grid = horizontalize(mk, grid)
+    GridCardano = horizontalize(GridSizeInput, GridCardano)
     fillTextGrid()
     
     encryptedText = "".join("".join(row) for row in encryptedTextGrid)
     return encryptedText
 
-def cardanosGridDecrypt(encryptedText, mk, grid, alphabet):
+def cardanosGridDecrypt(encryptedText, GridSizeInput, GridCardano, alphabet):
     for letter in encryptedText:
         if letter not in alphabet:
             return "Введёный текст содержит запрещённые символы"
     
     decryptedText = ""
-    decryptedTextGrid = [[encryptedText[i * mk[1] + j] for j in range(mk[1])] for i in range(mk[0])]
+    decryptedTextGrid = [[encryptedText[i * GridSizeInput[1] + j] for j in range(GridSizeInput[1])] for i in range(GridSizeInput[0])]
     
     def readTextGrid():
         nonlocal decryptedText
-        for coord in grid:
+        for coord in GridCardano:
             decryptedText += decryptedTextGrid[coord[0]][coord[1]]
     
     readTextGrid()
-    grid = horizontalize(mk, grid)
+    GridCardano = horizontalize(GridSizeInput, GridCardano)
     readTextGrid()
-    grid = verticalize(mk, grid)
+    GridCardano = verticalize(GridSizeInput, GridCardano)
     readTextGrid()
-    grid = horizontalize(mk, grid)
+    GridCardano = horizontalize(GridSizeInput, GridCardano)
     readTextGrid()
     
     if "заглушка" in decryptedText:
