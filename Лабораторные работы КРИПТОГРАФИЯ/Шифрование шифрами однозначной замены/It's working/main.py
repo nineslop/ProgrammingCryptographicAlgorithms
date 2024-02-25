@@ -12,12 +12,13 @@ from matrix import matrix_encrypt, matrix_decrypt, matrix_check_parameters, mult
 from playfair import playfair_encrypt, playfair_decrypt, playfair_check_parameters
 from veritcalTransposition import vertical_transposition_check_parameters, vertical_transposition_encrypt, vertical_transposition_decrypt
 from cardanosGrid import cardanosGridCheckParameters, cardanosGridEncrypt, cardanosGridDecrypt
+from feistelsNetwork import feistelsNetworkCheckParameters, feistelsNetwork
 
 available_ciphers = [
     "Шифр АТБАШ", "Шифр Цезаря", "Шифр Полибия",
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
     "Шифр Матричный", "Шифр Плейфера", "Шифр вертикальной перестановки",
-    "Шифр решетка Кардано",
+    "Шифр решетка Кардано", "Шифр сеть Фейстель",
 ]
 
 alphabet = [
@@ -101,6 +102,10 @@ class CipherApp(QWidget):
         self.cardanosGridGRIDGRID_edit = QLineEdit()
         self.cardanosGridGRIDGRID_edit.setPlaceholderText('Решётка (0 1, 1 6, 2 1, 2 2, 2 4, 3 6, 3 7, 4 3, 4 5, 5 0, 6 3, 6 5, 6 7, 7 2, 7 4, 7 7)')
 
+        # Ввод решётки для шифра сеть Фейстеля
+        self.feistelsNet_edit = QLineEdit()
+        self.feistelsNet_edit.setPlaceholderText('Ключ для шифра сети Фейстеля')
+
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
         mode_label = QLabel('Выберите режим:')
@@ -123,6 +128,7 @@ class CipherApp(QWidget):
         layout.addWidget(self.matrix_edit)
         layout.addWidget(self.cardanosGrid_edit)
         layout.addWidget(self.cardanosGridGRIDGRID_edit)
+        layout.addWidget(self.feistelsNet_edit)
         layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
@@ -181,6 +187,7 @@ class CipherApp(QWidget):
         matrix_input = self.matrix_edit.text()
         cardanosGridSizeInput = self.cardanosGrid_edit.text()
         cardanosGridGRIDInput = self.cardanosGridGRIDGRID_edit.text()
+        feistelsNetworkInput = self.feistelsNet_edit.text()
 
          # Определение режима работы (шифрование или дешифрование)
         mode = 'encrypt' if self.mode_combo.currentText() == 'Шифрование' else 'decrypt'
@@ -256,8 +263,17 @@ class CipherApp(QWidget):
                     cipher_text_input = "Введите ключевую букву для шифра Виженера"
                 elif mode == "decrypt":
                     open_text_input = "Введите ключевую букву для шифра Виженера"
-        # elif cipher_choose_input == "МАГМА(s_block)":
-            
+        elif cipher_choose_input == "МАГМА(s_block)":
+            if mode == "encrypt":
+                if s_block_check_parameters(open_text_input, alphabet_sblock):
+                    cipher_text_input = s_block_encrypt(open_text_input, alphabet_sblock)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
+            elif mode == "decrypt":
+                if s_block_check_parameters(cipher_text_input, alphabet_sblock):
+                    open_text_input = s_block_decrypt(cipher_text_input, alphabet_sblock)
+                else:
+                    open_text_input = "Проверьте правильность ввода ключей"
         elif cipher_choose_input == "Шифр Матричный":
             input_matrix = list(map(int, matrix_input.split()))
             matrix_input = [input_matrix[:3], input_matrix[3:6], input_matrix[6:]]
@@ -326,6 +342,17 @@ class CipherApp(QWidget):
                     cipher_text_input = "Проверьте правильность ввода решетки"
                 elif mode == "decrypt":
                     open_text_input = "Проверьте правильность ввода решетки"
+        elif cipher_choose_input == "Шифр сеть Фейстель":
+            if mode == "encrypt":
+                if feistelsNetworkCheckParameters(open_text_input, feistelsNetworkInput, alphabet_sblock):
+                    cipher_text_input = feistelsNetwork(open_text_input, feistelsNetworkInput, mode, alphabet_sblock)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
+            elif mode == "decrypt":
+                if feistelsNetworkCheckParameters(cipher_text_input, feistelsNetworkInput, alphabet_sblock):
+                    open_text_input = feistelsNetwork(cipher_text_input, feistelsNetworkInput, mode, alphabet_sblock)
+                else:
+                    open_text_input = "Проверьте правильность ввода ключей"
         else:
             pass
 
