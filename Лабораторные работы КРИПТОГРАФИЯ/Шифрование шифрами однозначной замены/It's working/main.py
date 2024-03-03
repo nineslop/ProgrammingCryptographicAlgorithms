@@ -8,17 +8,21 @@ from tritemiy import tritemiy_encrypt, tritemiy_decrypt
 from belazo import belazo_encrypt, belazo_decrypt, belazo_check_parameters
 from vigener import vigener_encrypt, vigener_decrypt, vigener_check_parameters
 from S_block import s_block_check_parameters,s_block_encrypt, s_block_decrypt
-from matrix import matrix_encrypt, matrix_decrypt, matrix_check_parameters, multiply_matrix, determinant, adjugate_matrix, inverse_matrix
+from matrix import matrix_encrypt, matrix_decrypt, matrix_check_parameters
 from playfair import playfair_encrypt, playfair_decrypt, playfair_check_parameters
 from veritcalTransposition import vertical_transposition_check_parameters, vertical_transposition_encrypt, vertical_transposition_decrypt
 from cardanosGrid import cardanosGridCheckParameters, cardanosGridEncrypt, cardanosGridDecrypt
 from feistelsNetwork import feistelsNetworkCheckParameters, feistelsNetwork
+from shannons_notebook import shannonsNotebookCheckParameters, shannons_notebook_encrypt, shannons_notebook_decrypt
+from hexoize import StrToHex, HexToStr
+from magma import MagmaCheckParameters, magma
 
 available_ciphers = [
     "Шифр АТБАШ", "Шифр Цезаря", "Шифр Полибия",
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
     "Шифр Матричный", "Шифр Плейфера", "Шифр вертикальной перестановки",
-    "Шифр решетка Кардано", "Шифр сеть Фейстель",
+    "Шифр решетка Кардано", "Шифр сеть Фейстель", "Одноразовый блокнот Шеннона",
+    "Hexoize", "Магма (гаммирование)",
 ]
 
 alphabet = [
@@ -43,6 +47,7 @@ alphabet_playfair = [
 ]
 
 alphabet_sblock = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"]
+
 
 mem = {
     "bigTextFlag": False,
@@ -106,6 +111,18 @@ class CipherApp(QWidget):
         self.feistelsNet_edit = QLineEdit()
         self.feistelsNet_edit.setPlaceholderText('Ключ для шифра сети Фейстеля')
 
+        # Ввод t для Одноразового блокнота Шеннона
+        self.shannons_t_a_c_edit = QLineEdit()
+        self.shannons_t_a_c_edit.setPlaceholderText('t a c для Одноразового блокнота Шеннона')
+
+        # Ввод ключа для Магмы (гаммирования)
+        self.magmaKeyInput_edit = QLineEdit()
+        self.magmaKeyInput_edit.setPlaceholderText('Ключ для Магма(гаммирования)')
+
+        # Ввод Инициализирующий вектор
+        self.magmaVectorInput_edit = QLineEdit()
+        self.magmaVectorInput_edit.setPlaceholderText('Инициализирующий вектор для Магма(гаммирования)')
+
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
         mode_label = QLabel('Выберите режим:')
@@ -129,6 +146,9 @@ class CipherApp(QWidget):
         layout.addWidget(self.cardanosGrid_edit)
         layout.addWidget(self.cardanosGridGRIDGRID_edit)
         layout.addWidget(self.feistelsNet_edit)
+        layout.addWidget(self.shannons_t_a_c_edit)
+        layout.addWidget(self.magmaKeyInput_edit)
+        layout.addWidget(self.magmaVectorInput_edit)
         layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
@@ -188,6 +208,9 @@ class CipherApp(QWidget):
         cardanosGridSizeInput = self.cardanosGrid_edit.text()
         cardanosGridGRIDInput = self.cardanosGridGRIDGRID_edit.text()
         feistelsNetworkInput = self.feistelsNet_edit.text()
+        shannonsNotebookT_A_C = self.shannons_t_a_c_edit.text()
+        magmaKeyInput = self.magmaKeyInput_edit.text()
+        magmaVectorInput = self.magmaVectorInput_edit.text()
 
          # Определение режима работы (шифрование или дешифрование)
         mode = 'encrypt' if self.mode_combo.currentText() == 'Шифрование' else 'decrypt'
@@ -351,6 +374,33 @@ class CipherApp(QWidget):
             elif mode == "decrypt":
                 if feistelsNetworkCheckParameters(cipher_text_input, feistelsNetworkInput, alphabet_sblock):
                     open_text_input = feistelsNetwork(cipher_text_input, feistelsNetworkInput, mode, alphabet_sblock)
+                else:
+                    open_text_input = "Проверьте правильность ввода ключей"
+        elif cipher_choose_input == "Одноразовый блокнот Шеннона":
+            if mode == "encrypt":
+                if shannonsNotebookCheckParameters(*list(map(int, shannonsNotebookT_A_C.split())), alphabet):
+                    cipher_text_input = shannons_notebook_encrypt(open_text_input, *list(map(int, shannonsNotebookT_A_C.split())), alphabet)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
+            elif mode == "decrypt":
+                if shannonsNotebookCheckParameters(*list(map(int, shannonsNotebookT_A_C.split())), alphabet):
+                    open_text_input = shannons_notebook_decrypt(open_text_input, *list(map(int, shannonsNotebookT_A_C.split())), alphabet)
+                else:
+                    open_text_input = "Проверьте правильность ввода ключей"
+        elif cipher_choose_input == "Hexoize":
+            if mode == "encrypt":
+                cipher_text_input = StrToHex(open_text_input)
+            elif mode == "decrypt":
+                open_text_input = HexToStr(cipher_text_input)
+        elif cipher_choose_input == "Магма (гаммирование)":
+            if mode == "encrypt":
+                if MagmaCheckParameters(magmaKeyInput, magmaVectorInput, alphabet_sblock):
+                    cipher_text_input = magma(open_text_input, magmaKeyInput, magmaVectorInput, mode, alphabet_sblock)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
+            elif mode == "decrypt":
+                if MagmaCheckParameters(magmaKeyInput, magmaVectorInput, alphabet_sblock):
+                    open_text_input = magma(cipher_text_input, magmaKeyInput, magmaVectorInput, mode, alphabet_sblock)
                 else:
                     open_text_input = "Проверьте правильность ввода ключей"
         else:
