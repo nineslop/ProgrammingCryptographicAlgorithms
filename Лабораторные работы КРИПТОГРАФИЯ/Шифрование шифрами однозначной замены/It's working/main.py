@@ -13,16 +13,17 @@ from playfair import playfair_encrypt, playfair_decrypt, playfair_check_paramete
 from veritcalTransposition import vertical_transposition_check_parameters, vertical_transposition_encrypt, vertical_transposition_decrypt
 from cardanosGrid import cardanosGridCheckParameters, cardanosGridEncrypt, cardanosGridDecrypt
 from feistelsNetwork import feistelsNetworkCheckParameters, feistelsNetwork
-from shannons_notebook import shannonsNotebookCheckParameters, shannons_notebook_encrypt, shannons_notebook_decrypt
+from shannons_notebook import shannonsNotebookCheckParameters, shannonsNotebookEncrypt, shannonsNotebookDecrypt
 from hexoize import StrToHex, HexToStr
 from magma import MagmaCheckParameters, magma
+from A5 import A5CheckParameters, A51, A52
 
 available_ciphers = [
     "Шифр АТБАШ", "Шифр Цезаря", "Шифр Полибия",
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
     "Шифр Матричный", "Шифр Плейфера", "Шифр вертикальной перестановки",
     "Шифр решетка Кардано", "Шифр сеть Фейстель", "Одноразовый блокнот Шеннона",
-    "Hexoize", "Магма (гаммирование)",
+    "Hexoize", "Магма (гаммирование)", "A5/1", "A5/2",
 ]
 
 alphabet = [
@@ -123,6 +124,9 @@ class CipherApp(QWidget):
         self.magmaVectorInput_edit = QLineEdit()
         self.magmaVectorInput_edit.setPlaceholderText('Инициализирующий вектор для Магма(гаммирования)')
 
+        self.A5key_edit = QLineEdit()
+        self.A5key_edit.setPlaceholderText('Ключ для A5/1 и A5/2')
+
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
         mode_label = QLabel('Выберите режим:')
@@ -149,6 +153,7 @@ class CipherApp(QWidget):
         layout.addWidget(self.shannons_t_a_c_edit)
         layout.addWidget(self.magmaKeyInput_edit)
         layout.addWidget(self.magmaVectorInput_edit)
+        layout.addWidget(self.A5key_edit)
         layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
@@ -211,6 +216,7 @@ class CipherApp(QWidget):
         shannonsNotebookT_A_C = self.shannons_t_a_c_edit.text()
         magmaKeyInput = self.magmaKeyInput_edit.text()
         magmaVectorInput = self.magmaVectorInput_edit.text()
+        keyword_A1_A2 = self.A5key_edit.text()
 
          # Определение режима работы (шифрование или дешифрование)
         mode = 'encrypt' if self.mode_combo.currentText() == 'Шифрование' else 'decrypt'
@@ -379,12 +385,12 @@ class CipherApp(QWidget):
         elif cipher_choose_input == "Одноразовый блокнот Шеннона":
             if mode == "encrypt":
                 if shannonsNotebookCheckParameters(*list(map(int, shannonsNotebookT_A_C.split())), alphabet):
-                    cipher_text_input = shannons_notebook_encrypt(open_text_input, *list(map(int, shannonsNotebookT_A_C.split())), alphabet)
+                    cipher_text_input = shannonsNotebookEncrypt(self.text_preparation(open_text_input), *list(map(int, shannonsNotebookT_A_C.split())), alphabet)
                 else:
                     cipher_text_input = "Проверьте правильность ввода ключей"
             elif mode == "decrypt":
                 if shannonsNotebookCheckParameters(*list(map(int, shannonsNotebookT_A_C.split())), alphabet):
-                    open_text_input = shannons_notebook_decrypt(open_text_input, *list(map(int, shannonsNotebookT_A_C.split())), alphabet)
+                    open_text_input = shannonsNotebookDecrypt(open_text_input, *list(map(int, shannonsNotebookT_A_C.split())), alphabet)
                 else:
                     open_text_input = "Проверьте правильность ввода ключей"
         elif cipher_choose_input == "Hexoize":
@@ -403,6 +409,28 @@ class CipherApp(QWidget):
                     open_text_input = magma(cipher_text_input, magmaKeyInput, magmaVectorInput, mode, alphabet_sblock)
                 else:
                     open_text_input = "Проверьте правильность ввода ключей"
+        elif cipher_choose_input == "A5/1":
+            if mode == "encrypt":
+                if A5CheckParameters(keyword_A1_A2):
+                    cipher_text_input = A51(self.text_preparation(open_text_input), keyword_A1_A2, mode)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
+            elif mode == "decrypt":
+                if A5CheckParameters(keyword_A1_A2):
+                    cipher_text_input = A51(cipher_text_input, keyword_A1_A2, mode)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
+        elif cipher_choose_input == "A5/2":
+            if mode == "encrypt":
+                if A5CheckParameters(keyword_A1_A2):
+                    cipher_text_input = A52(open_text_input, keyword_A1_A2, mode)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
+            elif mode == "decrypt":
+                if A5CheckParameters(keyword_A1_A2):
+                    cipher_text_input = A52(cipher_text_input, keyword_A1_A2, mode)
+                else:
+                    cipher_text_input = "Проверьте правильность ввода ключей"
         else:
             pass
 

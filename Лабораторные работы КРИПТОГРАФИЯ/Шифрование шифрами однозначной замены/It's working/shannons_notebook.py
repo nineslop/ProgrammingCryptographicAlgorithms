@@ -3,50 +3,53 @@ def gcd(a, b):
         return b
     return gcd(b % a, a)
 
-def shannons_notebook_check_parameters(t, a, c, alphabet):
+def shannonsNotebookCheckParameters(t, a, c, alphabet):
     if not (t and a and c):
-        return False  # t, a, and c are not numbers
+        return False # t, a и c не являются числами
     if not (t > 0 and a > 0 and c > 0):
-        return False  # Numbers are negative
+        return False # Числа отрицательные
     if t > 31 or a > 31 or c > 31:
-        return False  # Numbers are greater than or equal to the modulus
+        return False # Числа больше или равны модулю
     if a % 4 != 1:
-        return False  # a modulo 4 is not equal to 1
+        return False # a по модулю 4 не равно 1
     if gcd(c, 32) != 1:
-        return False  # c is not coprime with m
+        return False # c не соизмеримо с m
+    if a <= 1:
+        return False
     return True
 
-
-def shannons_notebook_encrypt(open_text, t:int, a:int, c:int, alphabet):
-    for letter in open_text:
+def shannonsNotebookEncrypt(openText, t, a, c, alphabet):
+    for letter in openText:
         if letter not in alphabet:
-            print("alphabet", alphabet)
-            print("t", t)
-            print("a", a)
-            print("c", c)
-            print("open_text", open_text)
-            return "Введёный текст содержит запрещённые символы"  # Буквы в тексте не входят в алфавит
-    encrypted_text = ""  # Зашифрованный текст
+            return "Введёный текст содержит запрещённые символы" # Буквы текста не содержатся в алфавите
+    encryptedText = "" # Шифртекст
     gamma = [t]
-    # Создание гаммы длины open_text
-    for i in range(len(open_text)):
+    # Создание гаммы длины openText
+    for i in range(len(openText)):
         gamma.append((a * gamma[-1] + c) % len(alphabet))
-    # XOR гамма и открытый текст
-    for i in range(len(open_text)):
-        encrypted_text += format((alphabet.index(open_text[i]) + 1) ^ gamma[i], '02x')
-    return encrypted_text  # Возвращение зашифрованного текста
+    # xor гаммы и открытого текста
+    for i in range(len(openText)):
+        encryptedText += str((alphabet.index(openText[i]) + 1) ^ gamma[i]).zfill(2)[-2:]
+    return encryptedText # Возврат шифртекста
 
-def shannons_notebook_decrypt(encrypted_text, t, a, c, alphabet):
-    decrypted_text = ""  # Расшифрованный текст
+def shannonsNotebookDecrypt(encryptedText, t, a, c, alphabet):
+    decryptedText = "" # Расшифрованный текст
     gamma = [t]
-    # Создание гаммы длины encrypted_text // 2
-    for i in range(len(encrypted_text) // 2):
+    # Создание гаммы длины encryptedText / 2
+    for i in range(len(encryptedText) // 2):
         gamma.append((a * gamma[-1] + c) % len(alphabet))
-    encrypted_text_arr = [encrypted_text[i:i+2] for i in range(0, len(encrypted_text), 2)]
-    if not encrypted_text_arr:
+    encryptedTextArr = [encryptedText[i:i+2] for i in range(0, len(encryptedText), 2)]
+    # Проверка наличия значений для расшифровки
+    if not encryptedTextArr:
         return ""
-    # XOR гамма и зашифрованный текст
-    for i in range(len(encrypted_text_arr)):
-        decrypted_text += alphabet[((int(encrypted_text_arr[i], 16) ^ gamma[i]) - 1) % len(alphabet)]
-    decrypted_text = decrypted_text.replace("тчк", ".").replace("зпт", ",").replace("тире", "-").replace("прбл", " ").replace("двтч", ":").replace("тчсзп", ";").replace("отскб", "(").replace("зкскб", ")").replace("впрзн", "?").replace("восклзн", "!").replace("првст", "\n")
-    return decrypted_text  # Возвращение расшифрованного текста
+    # xor гаммы и шифртекста
+    for i in range(len(encryptedTextArr)):
+        try:
+            decrypted_char_index = (int(encryptedTextArr[i]) ^ gamma[i]) - 1
+            decrypted_char = alphabet[decrypted_char_index % len(alphabet)]
+            decryptedText += decrypted_char
+        except ValueError:
+            # Обработка случая, когда строка не может быть преобразована в целое число
+            pass
+    decryptedText = decryptedText.replace("тчк", ".").replace("зпт", ",").replace("тире", "-").replace('прбл', ' ').replace('двтч', ':').replace('тчсзп', ';').replace('отскб', '(').replace('зкскб', ')').replace('впрзн', '?').replace('восклзн', '!').replace('првст', '\n')
+    return decryptedText # Возврат расшифрованного текста
