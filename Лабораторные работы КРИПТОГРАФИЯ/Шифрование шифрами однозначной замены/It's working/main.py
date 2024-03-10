@@ -412,7 +412,7 @@ class CipherApp(QWidget):
         elif cipher_choose_input == "A5/1":
             if mode == "encrypt":
                 if A5CheckParameters(keyword_A1_A2):
-                    cipher_text_input = A51(self.text_preparation(open_text_input), keyword_A1_A2, mode)
+                    cipher_text_input = A51(open_text_input, keyword_A1_A2, mode)
                 else:
                     cipher_text_input = "Проверьте правильность ввода ключей"
             elif mode == "decrypt":
