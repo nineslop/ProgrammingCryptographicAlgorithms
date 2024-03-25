@@ -17,9 +17,7 @@ from shannons_notebook import shannonsNotebookCheckParameters, shannonsNotebookE
 from hexoize import StrToHex, HexToStr
 from magma import MagmaCheckParameters, magma
 from A5 import A5CheckParameters, A51, A52
-from magmaerly import magmaErlyCheckParameters, magmaerly
-from kuznechik import kuznyechik_encrypt, kuznyechik_decrypt
-from RSAa import RSACheckParameters, RSAEncrypt, RSADecrypt
+from RSAa import rsa_check_parameters, rsa_encrypt, rsa_decrypt
 from ELGAMALl import elgamalCheckParameters, elgamalEncrypt, elgamalDecrypt
 
 
@@ -28,8 +26,7 @@ available_ciphers = [
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
     "Шифр Матричный", "Шифр Плейфера", "Шифр вертикальной перестановки",
     "Шифр решетка Кардано", "Шифр сеть Фейстель", "Одноразовый блокнот Шеннона",
-    "Hexoize", "Магма (гаммирование)", "A5/1", "A5/2", "Магма (Простой замены)",
-    "Кузнечик", "RSA", "Elgamal"
+    "Hexoize", "Магма (гаммирование)", "A5/1", "A5/2", "RSA", "Elgamal"
 ]
 
 alphabet = [
@@ -133,17 +130,17 @@ class CipherApp(QWidget):
         self.A5key_edit = QLineEdit()
         self.A5key_edit.setPlaceholderText('Ключ для A5/1 и A5/2')
 
-        self.magmaerly_edit = QLineEdit()
-        self.magmaerly_edit.setPlaceholderText('Ключ для Магма (Простой замены)')
+        # self.magmaerly_edit = QLineEdit()
+        # self.magmaerly_edit.setPlaceholderText('Ключ для Магма (Простой замены)')
 
-        self.kuznechik_edit = QLineEdit()
-        self.kuznechik_edit.setPlaceholderText('Ключ для Кузнечик')
+        # self.kuznechik_edit = QLineEdit()
+        # self.kuznechik_edit.setPlaceholderText('Ключ для Кузнечик')
 
         self.rsa_edit = QLineEdit()
-        self.rsa_edit.setPlaceholderText('N E D ключи для RSA')
+        self.rsa_edit.setPlaceholderText('P Q E D ключи для RSA')
 
         self.elgamal_edit = QLineEdit()
-        self.elgamal_edit.setPlaceholderText('p x g y ключи для RSA')
+        self.elgamal_edit.setPlaceholderText('p x g y ключи для Elgamal')
 
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
@@ -172,8 +169,8 @@ class CipherApp(QWidget):
         layout.addWidget(self.magmaKeyInput_edit)
         layout.addWidget(self.magmaVectorInput_edit)
         layout.addWidget(self.A5key_edit)
-        layout.addWidget(self.magmaerly_edit)
-        layout.addWidget(self.kuznechik_edit)
+        # layout.addWidget(self.magmaerly_edit)
+        # layout.addWidget(self.kuznechik_edit)
         layout.addWidget(self.rsa_edit)
         layout.addWidget(self.elgamal_edit)
         layout.addLayout(mode_layout)
@@ -239,9 +236,7 @@ class CipherApp(QWidget):
         magmaKeyInput = self.magmaKeyInput_edit.text()
         magmaVectorInput = self.magmaVectorInput_edit.text()
         keyword_A1_A2 = self.A5key_edit.text()
-        key_magmaerly = self.magmaerly_edit.text()
-        key_kuznechik = self.kuznechik_edit.text()
-        key_rsa_NED = self.rsa_edit.text()
+        key_rsa_PQED = self.rsa_edit.text()
         key_elgamal_PXGY = self.elgamal_edit.text()
 
          # Определение режима работы (шифрование или дешифрование)
@@ -457,47 +452,30 @@ class CipherApp(QWidget):
                     cipher_text_input = A52(cipher_text_input, keyword_A1_A2, mode)
                 else:
                     cipher_text_input = "Проверьте правильность ввода ключей"
-        elif cipher_choose_input == "Магма (Простой замены)":
-            if mode == "encrypt":
-                if magmaErlyCheckParameters(open_text_input,  key_magmaerly, alphabet_sblock):
-                    cipher_text_input = magmaerly(cipher_text_input, key_magmaerly, mode, alphabet_sblock)
-                else:
-                    cipher_text_input = "Проверьте правильность ввода ключей"
-            if mode == "decrypt":
-                if magmaErlyCheckParameters(cipher_text_input, key_magmaerly, alphabet_sblock):
-                    open_text_input = magmaerly(cipher_text_input, key_magmaerly, mode, alphabet_sblock)
-                else:
-                    open_text_input = "Проверьте правильность ввода ключей"
-        elif cipher_choose_input == "Кузнечик":
-            if mode == "encrypt":
-                cipher_text_input = str(kuznyechik_encrypt(open_text_input, key_kuznechik))
-            elif mode == "decrypt":
-                cipher_text_input = str(kuznyechik_decrypt(open_text_input, key_kuznechik))
         elif cipher_choose_input == "RSA":
             if mode == "encrypt":
-                if RSACheckParameters(*list(map(int, key_rsa_NED.split()))):
-                    cipher_text_input = RSAEncrypt(self.text_preparation(open_text_input), *list(map(int, key_rsa_NED.split())), alphabet)
+                error = rsa_check_parameters(*list(map(int, key_rsa_PQED.split())))
+                if not error:
+                    cipher_text_input = rsa_encrypt(self.text_preparation(open_text_input), *list(map(int, key_rsa_PQED.split())), alphabet)
+                else:
+                    cipher_text_input = error
+            elif mode == "decrypt":
+                error = rsa_check_parameters(*list(map(int, key_rsa_PQED.split())))
+                if not error:
+                    open_text_input = rsa_decrypt(cipher_text_input, *list(map(int, key_rsa_PQED.split())), alphabet)
+                else:
+                    open_text_input = error
+        elif cipher_choose_input == "Elgamal":
+            if mode == "encrypt":
+                if elgamalCheckParameters(*list(map(int, key_elgamal_PXGY.split()))):
+                    cipher_text_input = elgamalEncrypt(self.text_preparation(open_text_input), list(map(int, key_elgamal_PXGY.split())), alphabet)
                 else:
                     cipher_text_input = "Проверьте правильность ввода ключей"
             elif mode == "decrypt":
-                if RSACheckParameters(*list(map(int, key_rsa_NED.split()))):
-                    open_text_input = RSADecrypt(cipher_text_input, *list(map(int, key_rsa_NED.split())), alphabet)
+                if elgamalCheckParameters(list(map(int, key_elgamal_PXGY.split()))):
+                    open_text_input = elgamalDecrypt(cipher_text_input, list(map(int, key_elgamal_PXGY.split())), alphabet)
                 else:
                     open_text_input = "Проверьте правильность ввода ключей"
-        elif cipher_choose_input == "Elgamal":
-            if mode == "encrypt" or mode == "decrypt":
-                elgamal_keys = key_elgamal_PXGY.split()
-                if len(elgamal_keys) == 4:
-                    p, x, g, y = map(int, elgamal_keys)
-                    if elgamalCheckParameters(p, x, g, y):
-                        if mode == "encrypt":
-                            cipher_text_input = elgamalEncrypt(self.text_preparation(open_text_input), p, x, g, y, alphabet)
-                        else:
-                            open_text_input = elgamalDecrypt(cipher_text_input, p, x, g, y, alphabet)
-                    else:
-                        open_text_input = cipher_text_input = "Проверьте правильность ввода ключей"
-                else:
-                    open_text_input = cipher_text_input = "Неверное количество ключей ELGAMALl"
         else:
             pass
 

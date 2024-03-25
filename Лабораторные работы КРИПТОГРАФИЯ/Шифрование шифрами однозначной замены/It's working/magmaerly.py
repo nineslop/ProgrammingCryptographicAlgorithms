@@ -1,67 +1,114 @@
-from S_block import s_block_encrypt
+# Magma (GOST) Block Cipher
 
-def addBinary(a: str, b: str) -> str:
-    result = ""
-    i = len(a) - 1
-    j = len(b) - 1
-    carry = 0
-    while i >= 0 or j >= 0:
-        sum = carry
-        if i >= 0:
-            sum += int(a[i]) - int('0')
-            i -= 1
-        if j >= 0:
-            sum += int(b[j]) - int('0')
-            j -= 1
-        result = str(sum % 2) + result
-        carry = int(sum / 2)
-    if carry > 0:
-        result = '1' + result
-    return result
+pi0 = [12, 4, 6, 2, 10, 5, 11, 9, 14, 8, 13, 7, 0, 3, 15, 1]
+pi1 = [6, 8, 2, 3, 9, 10, 5, 12, 1, 14, 4, 7, 11, 13, 0, 15]
+pi2 = [11, 3, 5, 8, 2, 15, 10, 13, 14, 1, 7, 4, 12, 9, 6, 0]
+pi3 = [12, 8, 2, 1, 13, 4, 15, 6, 7, 0, 10, 5, 3, 14, 9, 11]
+pi4 = [7, 15, 5, 10, 8, 1, 6, 13, 0, 9, 3, 14, 11, 4, 2, 12]
+pi5 = [5, 13, 15, 6, 9, 2, 12, 10, 11, 7, 8, 1, 4, 3, 14, 0]
+pi6 = [8, 14, 2, 5, 6, 9, 1, 12, 15, 4, 11, 0, 13, 10, 3, 7]
+pi7 = [1, 7, 14, 13, 0, 5, 8, 3, 4, 15, 10, 6, 9, 12, 11, 2]
 
-def magmaErlyCheckParameters(text: str, key: str, alphabet: list) -> bool:
-    if len(key) != 64: return False
-    for letter in text:
-        if letter not in alphabet: return False
-    for letter in key:
-        if letter not in alphabet: return False
-    return True
+pi = [pi0, pi1, pi2, pi3, pi4, pi5, pi6, pi7]
 
-def magmaerly(openText: str, key: str, mode: str, alphabet_sblock: list) -> str:
-    def hex2bin(hex):
-        ans = ""
-        for letter in hex:
-            ans += bin(int(letter, 16))[2:].zfill(4)
-        return ans
+MASK32 = 2 ** 32 - 1
 
-    def bin2hex(bin):
-        return hex(int(bin, 2))[2:]
-
-    def f(rt, ki):
-        sm = ("00000000" + hex((int(rt, 16) + int(ki, 16)) % (2 ** 32))[2:])[-8:]
-        sBlockOutput = s_block_encrypt(sm, alphabet_sblock)
-        shift11 = hex2bin(sBlockOutput)[11:] + hex2bin(sBlockOutput)[:11]
-        return shift11
-
-    encryptedText = ""
-    keys = [key[i:i+8] for i in range(0, len(key), 8)]
-    revKeys = keys[::-1]
-    keys = keys * 3 + revKeys
-    if mode == "decrypt":
-        keys = keys[::-1]
-    res = []
-    if len(openText) % 16 != 0:
-        openText += "ffffffffffffffff"[:(len(openText) % 16) - 16]
-    for ltrt in [openText[i:i+16] for i in range(0, len(openText), 16)]:
-        lt = ltrt[:8]
-        rt = ltrt[8:]
-        for key in keys:
-            ff = f(rt, key)
-            ltBin = "".join([hex2bin(i) for i in lt])
-            ffXorlt = "".join([str(int(ff[i]) ^ int(ltBin[i])) for i in range(32)])
-            lt = rt
-            rt = ("00000000" + bin2hex(ffXorlt))[-8:]
-        res.append(rt + lt)
-    return "".join(res)
+# вводимое число x в 32 bits
+# выводимое число y в 32-bits
 
 
+def t(x):
+    y = 0
+    for i in reversed(range(8)):
+        j = (x >> 4 * i) & 0xf
+        y <<= 4
+        y ^= pi[i][j]
+    return y
+
+
+# x 32-bit integer
+def rot11(x):
+    return ((x << 11) ^ (x >> (32 - 11))) & MASK32
+
+
+# x и k это 32-bit integers
+def g(x, k):
+    return rot11(t((x + k) % 2 ** 32))
+
+
+# x это 64 bits
+# деление на тюплы
+def split(x):
+    L = x >> 32
+    R = x & MASK32
+    return (L, R)
+
+
+# Левый и правый по 32 бита
+# Возвращается 64-bits
+def join(L, R):
+    return (L << 32) ^ R
+
+
+# k равно 256-bits.
+# возвращается список из 32 ключей по 32 бита
+# первые 8 ключей берутся из деления ключа на 8 частей по 32 бита
+# оставшиеся ключи повотряют первые восемь
+def magma_key_schedule(k):
+    keys = []
+    for i in reversed(range(8)):
+        keys.append((k >> (32 * i)) & MASK32)
+    for i in range(8):
+        keys.append(keys[i])
+    for i in range(8):
+        keys.append(keys[i])
+    for i in reversed(range(8)):
+        keys.append(keys[i])
+    return keys
+
+
+# число x (текст) 64 bits.
+# k 256 bits
+# шифртекст 64-bits
+def magma_encrypt(x, k):
+    keys = magma_key_schedule(k)
+    (L, R) = split(x)
+    for i in range(31):
+        print(f'round {i}', hex(L), hex(R))
+        (L, R) = (R, L ^ g(R, keys[i]))
+
+    print(f'round {i+1}', hex(L), hex(R))
+    return join(L ^ g(R, keys[-1]), R)
+
+
+# число x (шифртекст) is 64 bits.
+# k 256 bits
+# текст 64-bits
+def magma_decrypt(x, k):
+    keys = magma_key_schedule(k)
+    keys.reverse()
+    (L, R) = split(x)
+    for i in range(31):
+        print(f'round {i}', hex(L), hex(R))
+        (L, R) = (R, L ^ g(R, keys[i]))
+
+    print(f'round {i+1}', hex(L), hex(R))
+
+    return join(L ^ g(R, keys[-1]), R)
+
+
+def magma_cipher():
+    # ключ
+    k = int('ffeeddccbbaa99887766554433221100f0f1f2f3f4f5f6f7f8f9fafbfcfdfeff', 16)
+    my_text = int('db54c704f8189d20', 16)   # текст
+    print('\n\nplain text', hex(my_text))
+    print('\n\nstarting encrypt 32-rounds')
+    CT = magma_encrypt(my_text, k)   # шифртекст
+    print('\n\nencrypt:', hex(CT))
+    print('\n\nstarting decrypt 32-rounds')
+    decrypt_text = magma_decrypt(CT, k)   # расшифровка 
+    print('\n\ndecrypt:', hex(decrypt_text))
+    # расшифровка = текст?
+    print('\n\nthey are similar?', decrypt_text == my_text)
+
+magma_cipher()

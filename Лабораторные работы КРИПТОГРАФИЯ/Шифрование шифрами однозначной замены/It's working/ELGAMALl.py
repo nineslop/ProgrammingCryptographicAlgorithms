@@ -1,69 +1,64 @@
-import math
-from typing import List, Tuple
+from math import gcd, sqrt
+from random import choice
 
-def gcd(a: int, b: int) -> int:  # Greatest common divisor
-    while b:
-        a, b = b, a % b
-    return a
-
-def findCoprime(n: int) -> List[int]:  # Returns the list of n coprimes
+def find_coprime(n):
     coprimes = []
     for i in range(2, n):
         if gcd(i, n) == 1:
             coprimes.append(i)
     return coprimes
 
-def fi(n: int) -> int:
+def fi(n):
     num = 0
     for i in range(1, n):
         if gcd(i, n) == 1:
             num += 1
     return num
 
-def comparison(comp: List[int]) -> int:  # comp = [x, y, z] xa = ymod(z)
+def comparison(comp):
     for y in range(comp[2]):
         if ((comp[0] * y) % comp[2]) == (comp[1] % comp[2]):
             return y
     return 0
 
-def isPrime(num: int) -> bool:
+def is_prime(num):
     if num <= 1:
         return False
-    for i in range(2, int(math.sqrt(num)) + 1):
+    for i in range(2, int(sqrt(num)) + 1):
         if num % i == 0:
             return False
     return True
 
-def elgamalCheckParameters(p: int, x: int, g: int, y: int) -> bool:
+def elgamalCheckParameters(p, x, g, y):
     if not (p and x and g and y):
-        return False  # p, x, g or y is NaN
-    if not isPrime(p):
-        return False  # p is not a prime
+        return False
+    if not is_prime(p):
+        return False
     if not ((1 < x < p) and (1 < g < p)):
-        return False  # Not 1 < x < p, 1 < g < p
+        return False
     if pow(g, x, p) != y:
-        return False  # not y ≡ g**x(mod p)
-    return True  # Everything is ok
+        return False
+    return True
 
-def elgamalEncrypt(openText: str, p: int, x: int, g: int, y: int, alphabet: List[str]) -> str:
-    import random
-    if any(letter not in alphabet for letter in openText):
-        return "Введёный текст содержит запрещённые символы"  # Буквы текста не содержатся в алфавите
-    keys = findCoprime(fi(p))
-    encryptedText = ""  # Шифртекст
-    for letter in openText:
-        ki = keys[0]  # Используем первое значение ki из списка
-        ai = ("0" * len(str(p)) + str(pow(g, ki, p)))[-len(str(p)):]
-        bi = ("0" * len(str(p)) + str((pow(y, ki, p) * alphabet.index(letter)) % p))[-len(str(p)):]
-        encryptedText += ai + bi
-    return encryptedText  # Возврат шифртекста
+def elgamalEncrypt(open_text, p, x, g, y, alphabet):
+    for letter in open_text:
+        if letter not in alphabet:
+            return "Введёный текст содержит запрещённые символы"
+    keys = find_coprime(fi(p))
+    encrypted_text = ""
+    for letter in open_text:
+        ki = choice(keys)
+        ai = str(pow(g, ki, p)).zfill(len(str(p)))
+        bi = str(pow(y, ki) * alphabet.index(letter) % p).zfill(len(str(p)))
+        encrypted_text += ai + bi
+    return encrypted_text
 
-def elgamalDecrypt(encryptedText: str, p: int, x: int, g: int, y: int, alphabet: List[str]) -> str:
-    lenLetter = len(str(p))
-    encryptedTextArr = [(int(encryptedText[i:i+lenLetter]), int(encryptedText[i+lenLetter:i+2*lenLetter])) for i in range(0, len(encryptedText), 2*lenLetter)]
-    decryptedText = ""
-    for ai, bi in encryptedTextArr:
-        decryptedText += alphabet[comparison([pow(ai, x, p), bi, p])]
-    # Перевод символов из их текстовых значений в символьые
-    decryptedText = decryptedText.replace("тчк", ".").replace("зпт", ",").replace("тире", "-").replace('прбл', ' ').replace('двтч', ':').replace('тчсзп', ';').replace('отскб', '(').replace('зкскб', ')').replace('впрзн', '?').replace('воскл��н', '!').replace('првст', '\n')
-    return decryptedText  # Возврат шифртекста
+def elgamalDecrypt(encrypted_text, p, x, g, y, alphabet):
+    len_letter = len(str(p))
+    encrypted_text_arr = [encrypted_text[i:i+len_letter*2] for i in range(0, len(encrypted_text), len_letter*2)]
+    decrypted_text = ""
+    for char in encrypted_text_arr:
+        ai, bi = int(char[:len_letter]), int(char[len_letter:])
+        decrypted_text += alphabet[comparison([pow(ai, x, p), bi, p])]
+    decrypted_text = decrypted_text.replace("тчк", ".").replace("зпт", ",").replace("тире", "-").replace('прбл', ' ').replace('двтч', ':').replace('тчсзп', ';').replace('отскб', '(').replace('зкскб', ')').replace('впрзн', '?').replace('восклзн', '!').replace('рвст', '\n')
+    return decrypted_text
