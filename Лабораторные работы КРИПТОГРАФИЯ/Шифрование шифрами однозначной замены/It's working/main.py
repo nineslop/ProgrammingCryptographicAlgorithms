@@ -17,8 +17,6 @@ from shannons_notebook import shannonsNotebookCheckParameters, shannonsNotebookE
 from hexoize import StrToHex, HexToStr
 from magma import MagmaCheckParameters, magma
 from A5 import A5CheckParameters, A51, A52
-from RSAa import rsa_check_parameters, rsa_encrypt, rsa_decrypt
-from ELGAMALl import elgamalCheckParameters, elgamalEncrypt, elgamalDecrypt
 
 
 available_ciphers = [
@@ -26,7 +24,7 @@ available_ciphers = [
     "Шифр Тритемия", "Шифр Белазо", "Шифр Виженера", "МАГМА(s_block)",
     "Шифр Матричный", "Шифр Плейфера", "Шифр вертикальной перестановки",
     "Шифр решетка Кардано", "Шифр сеть Фейстель", "Одноразовый блокнот Шеннона",
-    "Hexoize", "Магма (гаммирование)", "A5/1", "A5/2", "RSA", "Elgamal"
+    "Hexoize", "Магма (гаммирование)", "A5/1", "A5/2",
 ]
 
 alphabet = [
@@ -130,17 +128,6 @@ class CipherApp(QWidget):
         self.A5key_edit = QLineEdit()
         self.A5key_edit.setPlaceholderText('Ключ для A5/1 и A5/2')
 
-        # self.magmaerly_edit = QLineEdit()
-        # self.magmaerly_edit.setPlaceholderText('Ключ для Магма (Простой замены)')
-
-        # self.kuznechik_edit = QLineEdit()
-        # self.kuznechik_edit.setPlaceholderText('Ключ для Кузнечик')
-
-        self.rsa_edit = QLineEdit()
-        self.rsa_edit.setPlaceholderText('P Q E D ключи для RSA')
-
-        self.elgamal_edit = QLineEdit()
-        self.elgamal_edit.setPlaceholderText('p x g y ключи для Elgamal')
 
         # Режим работы шифра (шифрование или дешифрование)
         mode_layout = QHBoxLayout()
@@ -169,10 +156,6 @@ class CipherApp(QWidget):
         layout.addWidget(self.magmaKeyInput_edit)
         layout.addWidget(self.magmaVectorInput_edit)
         layout.addWidget(self.A5key_edit)
-        # layout.addWidget(self.magmaerly_edit)
-        # layout.addWidget(self.kuznechik_edit)
-        layout.addWidget(self.rsa_edit)
-        layout.addWidget(self.elgamal_edit)
         layout.addLayout(mode_layout)
         layout.addWidget(self.encrypt_button)
 
@@ -236,8 +219,6 @@ class CipherApp(QWidget):
         magmaKeyInput = self.magmaKeyInput_edit.text()
         magmaVectorInput = self.magmaVectorInput_edit.text()
         keyword_A1_A2 = self.A5key_edit.text()
-        key_rsa_PQED = self.rsa_edit.text()
-        key_elgamal_PXGY = self.elgamal_edit.text()
 
          # Определение режима работы (шифрование или дешифрование)
         mode = 'encrypt' if self.mode_combo.currentText() == 'Шифрование' else 'decrypt'
@@ -452,30 +433,6 @@ class CipherApp(QWidget):
                     cipher_text_input = A52(cipher_text_input, keyword_A1_A2, mode)
                 else:
                     cipher_text_input = "Проверьте правильность ввода ключей"
-        elif cipher_choose_input == "RSA":
-            if mode == "encrypt":
-                error = rsa_check_parameters(*list(map(int, key_rsa_PQED.split())))
-                if not error:
-                    cipher_text_input = rsa_encrypt(self.text_preparation(open_text_input), *list(map(int, key_rsa_PQED.split())), alphabet)
-                else:
-                    cipher_text_input = error
-            elif mode == "decrypt":
-                error = rsa_check_parameters(*list(map(int, key_rsa_PQED.split())))
-                if not error:
-                    open_text_input = rsa_decrypt(cipher_text_input, *list(map(int, key_rsa_PQED.split())), alphabet)
-                else:
-                    open_text_input = error
-        elif cipher_choose_input == "Elgamal":
-            if mode == "encrypt":
-                if elgamalCheckParameters(*list(map(int, key_elgamal_PXGY.split()))):
-                    cipher_text_input = elgamalEncrypt(self.text_preparation(open_text_input), list(map(int, key_elgamal_PXGY.split())), alphabet)
-                else:
-                    cipher_text_input = "Проверьте правильность ввода ключей"
-            elif mode == "decrypt":
-                if elgamalCheckParameters(list(map(int, key_elgamal_PXGY.split()))):
-                    open_text_input = elgamalDecrypt(cipher_text_input, list(map(int, key_elgamal_PXGY.split())), alphabet)
-                else:
-                    open_text_input = "Проверьте правильность ввода ключей"
         else:
             pass
 
