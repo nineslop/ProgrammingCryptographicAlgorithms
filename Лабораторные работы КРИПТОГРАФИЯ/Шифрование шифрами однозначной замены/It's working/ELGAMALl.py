@@ -2,6 +2,8 @@
 from random import choice
 from functions import encodingFormat, normalText, isPrime, coprime, strToDigits, digitsToStr, inputText, saveOutput
 
+
+
 # Функция для генерации трех рандомизаторов
 def genNums(n, amnt = 3):
     num = []
