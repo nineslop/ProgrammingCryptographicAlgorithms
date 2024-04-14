@@ -445,3 +445,4 @@ if __name__ == '__main__':
     ex = CipherApp()
     ex.show()
     sys.exit(app.exec_())
+

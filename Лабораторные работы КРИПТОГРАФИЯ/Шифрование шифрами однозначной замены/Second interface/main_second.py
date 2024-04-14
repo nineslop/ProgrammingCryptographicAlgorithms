@@ -1,10 +1,9 @@
-import RSAa, ELGAMALl
-
+import RSAa, gost_94, RSa_ds
 # Основной диалог.
 while True:
     action = int(input('''Выбор шифра / Выход:
 1) RSA.
-2) Elgamal.
+2) ГОСТ Р 34.10-94
 3) RSA (ЭЦП).
 
 0) Выход из программы.
@@ -14,7 +13,9 @@ while True:
     if (action == 1):
         RSAa.main()
     elif (action == 2):
-        ELGAMALl.main()
+        gost_94.main()
+    elif (action == 3):
+        RSa_ds.main()
     elif action == 0:
         exit()
     print()
