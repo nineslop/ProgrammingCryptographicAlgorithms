@@ -50,8 +50,14 @@ class DiffieHellmanApp(QWidget):
         ka = int(self.ka_edit.text())
         kb = int(self.kb_edit.text())
 
+        # Вычисление обмена ключами по протоколу Диффи-Хеллмана
+        ya = pow(a, ka, n)  # Вычисляем Ya
+        yb = pow(a, kb, n)  # Вычисляем Yb
+        xa = pow(yb, ka, n)  # Вычисляем Xa
+        xb = pow(ya, kb, n)  # Вычисляем Xb
+
         # Проверка корректности параметров
-        error_message = diffie_hellman_check_parameters(n, a, ka, kb)
+        error_message = diffie_hellman_check_parameters(n, a, ka, kb, xa, xb)
         if error_message:
             self.result_label.setText(error_message)
             return
@@ -75,7 +81,7 @@ def is_prime(num):
     # оно является простым.
     return True
 
-def diffie_hellman_check_parameters(n, a, ka, kb):
+def diffie_hellman_check_parameters(n, a, ka, kb, xa, xb):
     """Проверяет, являются ли заданные параметры корректными для обмена ключами по протоколу Диффи-Хеллмана."""
     # Проверяем, чтобы параметр n был задан
     if not n:
@@ -104,6 +110,11 @@ def diffie_hellman_check_parameters(n, a, ka, kb):
     # Проверяем, чтобы kb было в допустимых пределах
     if not (1 < kb < n):
         return "kb должно быть больше 1 и меньше n"
+    # Добавляем проверку для xa и xb
+    if xa == 1:
+        return "Секретный ключ Xa не может быть равен 1"
+    if xb == 1:
+        return "Секретный ключ Xb не может быть равен 1"
     # Все параметры корректны, возвращаем None
     return None
 
@@ -117,7 +128,7 @@ def diffie_hellman(n, a, ka, kb):
     # Проверяем, равны ли Xa и Xb, что указывает на корректный обмен ключами
     if xa == xb:
         # Если ключи равны, возвращаем сообщение об успешном обмене ключами
-        return f"Открытый ключ Ya = {ya}\nОткрытый ключ Yb = {yb}\nСекретный ключ Xa = {xa}\nСекретный ключ Xb = {xb}\nXa = Xb ({xa} = {xb}) Подпись верна"
+        return f"Открытый ключ Ya = {ya}\nОткрытый ключ Yb = {yb}\nСекретный ключ Xa = {xa}\nСекретный ключ Xb = {xb}\nXa = Xb ({xa} = {xb}) Обмен ключами верен"
     else:
         # Если ключи не равны, возвращаем сообщение о неудаче
         return "Подпись не верна"

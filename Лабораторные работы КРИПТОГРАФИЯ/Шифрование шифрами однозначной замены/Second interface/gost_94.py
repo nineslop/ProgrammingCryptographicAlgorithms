@@ -75,36 +75,48 @@ def checkSign(text, r, s, p, q, a, y, n):
         res = 'Подпись не действительна.'
     return res
 
-
-
 def main():
     print("ЭЦП по ГОСТ Р 34.10-94")
     action = int(input("Выберите действие:\n 1) Подписать\n 2) Проверить\n"))
     # Создание подписи.
     if (action == 1):
         text = inputText()
-        # Ввод параметров.
+        # Ввод параметров и проверка.
         while True:
-            p = int(input("Введите большое простое p: "))
-            if isPrime(p) and (int(p))>32:
+            p = int(input("Введите простое целое число p: "))
+            if isPrime(p):
                 break
             else:
                 print("Число ", p, " не является простым или меньше 32")
+       
+        while True:
             q = int(input("Введите простое q, являющееся сомножителем числа p-1: "))
-            if paramValidation(p, q):
+            if not isPrime(q) or (p - 1) % q != 0:
+                print('Неверное q, введите еще раз, оно должно быть простым сомножителем p-1')
+            else:
                 break
+            
         while True:
             a = int(input("Введите такое а, что 1 < a < p-1 и (a^q) mod p = 1: "))
-            x = int(input("Введите x < q: "))
-            if  paramValidation(p, q, a, x):
+            if a <= 1 or a >= (p - 1) or (a ** q) % p != 1:
+                print('Неверное а, введите еще раз, оно должно быть таким, что 1 < a < p-1 и (a^q) mod p = 1')
+            else:
                 break
+        while True:
+            x = int(input("Введите x < q: "))
+            if x >= q:
+                print('Неверное x, введите еще раз, оно должно быть меньше q')
+            else:
+                break
+
+
         while True:
             k = int(input("Введите случайное число k, при этом k < q: "))
             if  k >= q:
                 print("Неверное k, введите еще раз, оно должно быть меньше q")
             else:
                 break
-        n = int(input("Введите модуль для хэширования h: "))
+        n = int(input("Введите модуль для хэширования n: "))
         result = makeSign(text, p, q, a, x, k, n)
         print("ЭЦП: " ,result)
         saveOutput(str(result))
@@ -126,7 +138,7 @@ def main():
             if  paramValidation(p, q, a):
                 break
         y = int(input("Введите открытый ключ Y: "))
-        n = int(input("Введите модуль для хэширования h: "))
+        n = int(input("Введите модуль для хэширования n: "))
         result = checkSign(text, r, s, p, q, a, y, n)
         print("Результат проверки:", result)
         saveOutput(result)

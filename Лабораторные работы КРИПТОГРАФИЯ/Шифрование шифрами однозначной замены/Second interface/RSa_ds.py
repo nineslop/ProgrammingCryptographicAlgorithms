@@ -65,10 +65,16 @@ def RSA_DS_encrypt(open_text, p, q, e, alph):
             return "Входной текст содержит символы, которые не могут быть закодированы"
     n = p * q
     h = hash(encoded_text, n, alph)
-    return str((h ** comparison([e, 1, fi(n)])) % n)
-
-
-
+    
+    # Проверка взаимной простоты e и f
+    f = (p - 1) * (q - 1)
+    if gcd(e, f) != 1:
+        return "Невозможно вычислить D: e и f не взаимно просты"
+    
+    # Вычисление D так, чтобы E * D = 1 mod f
+    d = mod_inverse(e, f)
+    
+    return str((h ** comparison([e, 1, fi(n)])) % n), d
 
 def RSA_DS_decrypt(open_text, p, q, e, ds, alph):
     encoded_text = ""
@@ -80,8 +86,36 @@ def RSA_DS_decrypt(open_text, p, q, e, ds, alph):
             return "Введёный текст содержит запрещённые символы"
     n = p * q
     h = hash(encoded_text, n, alph)
+    
+    # Проверка взаимной простоты e и f
+    f = (p - 1) * (q - 1)
+    if gcd(e, f) != 1:
+        return "Невозможно вычислить D: e и f не взаимно просты"
+    
+    # Вычисление D так, чтобы E * D = 1 mod f
+    d = mod_inverse(e, f)
+    
     decrypted_hash = (ds ** e) % n
-    return "Подпись верна" if decrypted_hash == h else "Подпись не верна"
+    return "Подпись верна" if decrypted_hash == h else "Подпись верна", d
+
+def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def mod_inverse(a, m):
+    g, x, y = extended_gcd(a, m)
+    if g != 1:
+        raise Exception('Обратного элемента не существует')
+    return x % m
+
+def extended_gcd(a, b):
+    if a == 0:
+        return b, 0, 1
+    else:
+        gcd, x, y = extended_gcd(b % a, a)
+        return gcd, y - (b // a) * x, x
+
 
 
 def main():
@@ -92,26 +126,38 @@ def main():
         open_text = inputText()
         # Ввод параметров.
         while True:
-            p = int(input("Введите простое число p: "))
-            if isPrime(p) and p>32:
+            p = int(input("Введите p(Простое): "))
+            if isPrime(p):
                 break
             else:
-                print('Неверное p, оно должно быть простым и больше 32')
+                print('Неверное p, оно должно быть простым')
         while True:
-            q = int(input("Введите простое число q: "))
-            if isPrime(q) and p>32:
+            q = int(input("Введите q(Простое): "))
+            if isPrime(q):
                 break
             else:
-                print('Неверное q, оно должно быть простым и больше 32')
+                print('Неверное q, оно должно быть простым')
+
         n = p * q
+        print('n =', n)
+
+        while True:
+            n = int(input("Введите n(n >= 32): "))
+            if n >= 32:
+                break
+            else:
+                print('Неверное n, оно должно быть больше или равно 32')
+    
         f = (p-1)*(q-1) # ф-я Эйлера.
-        print("f: ", f)
+        print("n, f: ", n, f)
         while True:
             e = int(input("Введите случайное целое число e, взаимно простое с f: "))
             if coprime(e, f):
                 break
             else:
                 print('Неверное e, оно должно быть взаимно простым с f и не равным d')
+
+
 
         print("Вычисление подписи...")
         signature = RSA_DS_encrypt(open_text, p, q, e, alph)
@@ -127,8 +173,6 @@ def main():
         q = int(input("Введите простое число q: "))
         e = int(input("Введите значение e: "))
         ds = int(input("Введите значение ds: "))
-
-
 
         result = RSA_DS_decrypt(open_text, p, q, e, ds, alph)
         print("Результат проверки:", result)
