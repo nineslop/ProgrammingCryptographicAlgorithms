@@ -1,0 +1,62 @@
+<mxfile host="Electron" modified="2024-05-17T10:13:52.818Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="SF1be5vMt67vjojd4jo1" version="24.4.0" type="device">
+  <diagram name="Страница — 1" id="-rV2kJQ7eQGyMc1xFudD">
+    <mxGraphModel dx="1687" dy="1005" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="U7MXnnjYINnltX5LScJu-2" value="Проверка ключа" style="swimlane;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="199" y="10" width="430" height="460" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="U7MXnnjYINnltX5LScJu-2" source="U7MXnnjYINnltX5LScJu-3" target="U7MXnnjYINnltX5LScJu-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-3" value="Начало" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="U7MXnnjYINnltX5LScJu-2">
+          <mxGeometry x="171" y="30" width="99" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="U7MXnnjYINnltX5LScJu-2" source="U7MXnnjYINnltX5LScJu-5" target="U7MXnnjYINnltX5LScJu-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-5" value="Получуение ключевого слова и алфавита" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="U7MXnnjYINnltX5LScJu-2">
+          <mxGeometry x="160.5" y="90" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="U7MXnnjYINnltX5LScJu-2" source="U7MXnnjYINnltX5LScJu-7" target="U7MXnnjYINnltX5LScJu-13">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-15" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="U7MXnnjYINnltX5LScJu-14">
+          <mxGeometry x="-0.4667" y="1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-7" value=" Символ не входит в алфавит" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="U7MXnnjYINnltX5LScJu-2">
+          <mxGeometry x="165.5" y="170" width="110" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-10" value="Ошибка Некорректный ввод" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="U7MXnnjYINnltX5LScJu-2">
+          <mxGeometry x="21" y="240" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="U7MXnnjYINnltX5LScJu-2" source="U7MXnnjYINnltX5LScJu-7" target="U7MXnnjYINnltX5LScJu-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-12" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="U7MXnnjYINnltX5LScJu-11">
+          <mxGeometry x="-0.7189" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-13" value=" Длина текста не равна 8" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="U7MXnnjYINnltX5LScJu-2">
+          <mxGeometry x="142.13" y="280" width="157.87" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-17" value="True" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="U7MXnnjYINnltX5LScJu-2">
+          <mxGeometry x="175.5" y="390" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-18" value="False" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="U7MXnnjYINnltX5LScJu-2">
+          <mxGeometry x="22" y="390" width="99" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="U7MXnnjYINnltX5LScJu-2" source="U7MXnnjYINnltX5LScJu-13" target="U7MXnnjYINnltX5LScJu-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="U7MXnnjYINnltX5LScJu-76" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="U7MXnnjYINnltX5LScJu-2" source="U7MXnnjYINnltX5LScJu-13" target="U7MXnnjYINnltX5LScJu-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
