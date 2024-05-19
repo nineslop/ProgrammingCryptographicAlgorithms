@@ -1,0 +1,277 @@
+<mxfile host="Electron" modified="2024-05-19T09:36:40.248Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.4.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="CF27VVJa2CYTZniwLK39" version="24.4.0" type="device">
+  <diagram name="Страница — 1" id="T6XOE7abDwlFeBQXPunE">
+    <mxGraphModel dx="1434" dy="854" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-1" target="sbdvCHZVICgfeeXLF9ZI-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-1" value="Начало" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="364" y="40" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-2" target="sbdvCHZVICgfeeXLF9ZI-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-2" value="Получение подготовленного текста, ключевого слова и алфавита" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="354" y="100" width="116" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-4" target="sbdvCHZVICgfeeXLF9ZI-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-4" value="Все символы ключа содержаться в алфавите" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="350" y="220" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-6" value="False" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="270" y="300" width="80" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-4" target="sbdvCHZVICgfeeXLF9ZI-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-8" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-7">
+          <mxGeometry x="-0.725" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-9" target="sbdvCHZVICgfeeXLF9ZI-11">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-9" target="sbdvCHZVICgfeeXLF9ZI-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-9" value="Вывод True" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="358" y="340" width="104" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-11" target="sbdvCHZVICgfeeXLF9ZI-44">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-11" value="Расшифрование" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="160" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-12" target="sbdvCHZVICgfeeXLF9ZI-15">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-12" value="Шифрование" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="410" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-15" target="sbdvCHZVICgfeeXLF9ZI-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-22" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-21">
+          <mxGeometry x="-0.7" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-15" value="&lt;strong&gt;Проверка наличия буквы в алфавите&lt;/strong&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="490" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-17" value="&lt;strong&gt;Введенный текст содержит запрещенные символы&lt;/strong&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="700" y="570" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-15" target="sbdvCHZVICgfeeXLF9ZI-17">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-19" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-18">
+          <mxGeometry x="-0.6364" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-20" target="sbdvCHZVICgfeeXLF9ZI-26">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-28" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-27">
+          <mxGeometry x="-0.6" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-20" value="&lt;strong&gt;Цикл по буквам ключевого слова для создания цифровой клавиши&lt;/strong&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="610" width="150" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-23" value="&lt;strong&gt;Введенный текст содержит запрещенные символы&lt;/strong&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="695" y="730" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-24" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-20" target="sbdvCHZVICgfeeXLF9ZI-23">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-25" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-24">
+          <mxGeometry x="-0.7636" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-30" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-26" target="sbdvCHZVICgfeeXLF9ZI-29">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-26" value="Для каждой буквы Добавить индекс (1-based) в &lt;code&gt;key&lt;br&gt;&lt;/code&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Удалить букву из &lt;/span&gt;&lt;code style=&quot;background-color: initial;&quot;&gt;sorted_keyword&lt;/code&gt;&amp;nbsp;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="780" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-29" target="sbdvCHZVICgfeeXLF9ZI-31">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-29" value="&lt;strong&gt;заполнения матрицы текстом&lt;/strong&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="560" y="900" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-31" target="sbdvCHZVICgfeeXLF9ZI-36">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-38" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-37">
+          <mxGeometry x="-0.5667" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-31" value="&lt;strong&gt;Цикл по длине ключевого слова для чтения столбцов&lt;/strong&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="535" y="980" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-33" value="&lt;strong&gt;Введенный текст содержит запрещенные символы&lt;/strong&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="695" y="1080" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-34" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-31" target="sbdvCHZVICgfeeXLF9ZI-33">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-35" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-34">
+          <mxGeometry x="-0.7556" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-41" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-36" target="sbdvCHZVICgfeeXLF9ZI-40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="1390" />
+              <mxPoint x="400" y="1390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-36" value="Для каждой строки:&lt;div&gt;Заполнение &lt;code&gt;encrypted_text_array&lt;/code&gt; по ключу&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="545" y="1140" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-40" value="Вывод результата работы алгоритма" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="340" y="1440" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-42" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-44" target="sbdvCHZVICgfeeXLF9ZI-50">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-43" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-42">
+          <mxGeometry x="-0.7" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-44" value="&lt;strong&gt;Проверка наличия буквы в алфавите&lt;/strong&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="165" y="500" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-45" value="&lt;strong&gt;Введенный текст содержит запрещенные символы&lt;/strong&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="305" y="580" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-46" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-44" target="sbdvCHZVICgfeeXLF9ZI-45">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-47" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-46">
+          <mxGeometry x="-0.6364" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-48" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-50" target="sbdvCHZVICgfeeXLF9ZI-55">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-49" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-48">
+          <mxGeometry x="-0.6" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-50" value="&lt;strong&gt;Цикл по буквам ключевого слова для создания цифровой клавиши&lt;/strong&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="620" width="150" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-51" value="&lt;strong&gt;Введенный текст содержит запрещенные символы&lt;/strong&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="300" y="740" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-50" target="sbdvCHZVICgfeeXLF9ZI-51">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-53" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-52">
+          <mxGeometry x="-0.7636" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-55" target="sbdvCHZVICgfeeXLF9ZI-57">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-55" value="Для каждой буквы Добавить индекс (1-based) в &lt;code&gt;key&lt;br&gt;&lt;/code&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;Удалить букву из &lt;/span&gt;&lt;code style=&quot;background-color: initial;&quot;&gt;sorted_keyword&lt;/code&gt;&amp;nbsp;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="150" y="790" width="150" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-56" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-57" target="sbdvCHZVICgfeeXLF9ZI-59">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-57" value="&lt;strong&gt;заполнения матрицы текстом&lt;/strong&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="165" y="910" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-65" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-59" target="sbdvCHZVICgfeeXLF9ZI-64">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-66" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-65">
+          <mxGeometry x="-0.2667" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-59" value="&lt;strong&gt;Цикл по длине ключевого слова для чтения столбцов&lt;/strong&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="140" y="990" width="170" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-59">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="350" y="1090" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-61" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-60">
+          <mxGeometry x="-0.7556" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-63" value="&lt;strong&gt;Введенный текст содержит запрещенные символы&lt;/strong&gt;" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="350" y="1060" width="100" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-68" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-64" target="sbdvCHZVICgfeeXLF9ZI-67">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-64" value="Заполнение столбцов строками соответствующей длины" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="165" y="1120" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-73" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-67" target="sbdvCHZVICgfeeXLF9ZI-72">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-74" value="Да" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-73">
+          <mxGeometry x="-0.3" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-67" value="&lt;strong&gt;Цикл для восстановления открытого текста&lt;/strong&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="165" y="1200" width="120" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-69" value="Ошибка" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1280" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-70" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-67" target="sbdvCHZVICgfeeXLF9ZI-69">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-71" value="Нет" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="sbdvCHZVICgfeeXLF9ZI-70">
+          <mxGeometry x="-0.7263" y="-1" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-75" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-72" target="sbdvCHZVICgfeeXLF9ZI-40">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="225" y="1390" />
+              <mxPoint x="400" y="1390" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-72" value="Для каждого ряда:&lt;div&gt;Считывание символов по столбцам&lt;br&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="165" y="1320" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-76" value="Конец работы" style="strokeWidth=2;html=1;shape=mxgraph.flowchart.terminator;whiteSpace=wrap;" vertex="1" parent="1">
+          <mxGeometry x="350" y="1530" width="100" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sbdvCHZVICgfeeXLF9ZI-77" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="sbdvCHZVICgfeeXLF9ZI-40" target="sbdvCHZVICgfeeXLF9ZI-76">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
